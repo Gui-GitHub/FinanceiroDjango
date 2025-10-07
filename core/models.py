@@ -1,6 +1,5 @@
 from django.db import models
 
-import uuid
 from django.db import models
 
 # Classe padrão na criação
@@ -15,7 +14,7 @@ class Base(models.Model):
 # Campo da Pessoa
 class Pessoa(Base):
     nome = models.CharField('Nome', max_length=100)
-    sexo = models.CharField('Facebook')
+    sexo = models.CharField('Sexo', max_length=20)
     data_nascimento = models.DateField('Data de nascimento')
 
     class Meta:
@@ -28,7 +27,7 @@ class Pessoa(Base):
 # Campo do banco
 class Banco(Base):
     nome = models.CharField('Nome', max_length=100)
-    descricao = models.TextField('Descrição', max_length=200)
+    descricao = models.TextField('Descrição', max_length=200, blank=True)
 
     class Meta:
         verbose_name = 'Banco'
@@ -36,3 +35,18 @@ class Banco(Base):
 
     def __str__(self):
         return self.servico
+    
+# Gastos Mensais
+class GastoMensal(Base):
+    pessoa = models.ForeignKey(Pessoa, on_delete=models.CASCADE, related_name='gastos')
+    banco = models.ForeignKey(Banco, on_delete=models.CASCADE, related_name='gastos')
+    mes = models.DateField('Mês e Ano')  # Podemos usar o dia 1 do mês para simplificar
+    valor = models.DecimalField('Valor gasto', max_digits=10, decimal_places=2)
+
+    class Meta:
+        verbose_name = 'Gasto Mensal'
+        verbose_name_plural = 'Gastos Mensais'
+        ordering = ['mes']
+
+    def __str__(self):
+        return f'{self.pessoa.nome} - {self.banco.nome} - {self.mes.strftime("%m/%Y")}: {self.valor}'
