@@ -13,6 +13,7 @@ class Base(models.Model):
 
 # Campo da Pessoa
 class Pessoa(Base):
+    cpf = models.CharField('CPF', max_length=14, unique=True)
     nome = models.CharField('Nome', max_length=100)
     sexo = models.CharField('Sexo', max_length=20)
     data_nascimento = models.DateField('Data de nascimento')

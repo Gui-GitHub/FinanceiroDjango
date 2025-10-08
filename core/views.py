@@ -34,6 +34,12 @@ class GastoCreateView(FormView):
     form_class = GastoForm
     success_url = reverse_lazy('relatorio')  # redireciona para o relatório final
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['pessoas'] = Pessoa.objects.all()  # adiciona todas as pessoas
+        context['bancos'] = Banco.objects.all()    # adiciona todos os bancos
+        return context
+
     def form_valid(self, form):
         pessoa_id = self.request.session.get('pessoa_id')
         if not pessoa_id:

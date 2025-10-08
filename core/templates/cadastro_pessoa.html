@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<section id="cadastro-pessoa" class="section-padding">
+  <div class="container">
+    <div class="section-header text-center">
+      <h2 class="section-title wow fadeInDown" data-wow-delay="0.3s">Cadastro de Pessoa</h2>
+      <p>Adicione novas pessoas para o controle financeiro.</p>
+    </div>
+
+    <div class="row justify-content-center">
+      <div class="col-lg-6 col-md-8">
+        <form method="POST" class="wow fadeInUp" data-wow-delay="0.4s">
+          {% csrf_token %}
+          
+          <div class="form-group">
+            <label for="cpf">CPF</label>
+            <input type="text" id="cpf" name="cpf" class="form-control" placeholder="000.000.000-00" maxlength="14" required>
+          </div>
+
+          <div class="form-group">
+            <label for="nome">Nome</label>
+            <input type="text" id="nome" name="nome" class="form-control" placeholder="Digite o nome" required>
+          </div>
+
+          <div class="form-group">
+            <label for="sexo">Sexo</label>
+            <select id="sexo" name="sexo" class="form-control" required>
+              <option value="" disabled selected>Selecione</option>
+              <option value="Masculino">Masculino</option>
+              <option value="Feminino">Feminino</option>
+              <option value="Outro">Outro</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="data_nascimento">Data de nascimento</label>
+            <input type="date" id="data_nascimento" name="data_nascimento" class="form-control" required>
+          </div>
+          
+          <button type="submit" class="btn btn-primary btn-block mt-3">Salvar</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

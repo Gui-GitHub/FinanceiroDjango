@@ -1,0 +1,139 @@
+/* Variáveis de cor */
+:root {
+  --primary-color: #c82333;   /* Vermelho principal */
+  --secondary-color: #dc3545; /* Vermelho mais claro */
+  --background-color: #f8f9fa;
+  --text-color: #333;
+}
+
+/* Reset */
+body {
+  background-color: var(--background-color);
+  font-family: 'Poppins', sans-serif;
+  color: var(--text-color);
+  margin: 0;
+  padding: 0;
+}
+
+/* ===============================
+   Navbar
+   =============================== */
+.navbar {
+  background-color: var(--primary-color);
+}
+
+.navbar .nav-link {
+  color: #fff !important;
+  font-weight: 500;
+  transition: color 0.2s ease-in-out;
+}
+
+.navbar .nav-link:hover {
+  color: #ffd6d6 !important;
+}
+
+/* ===============================
+   Botões
+   =============================== */
+.btn-primary {
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+  transition: 0.3s;
+}
+
+.btn-primary:hover {
+  background-color: var(--secondary-color);
+  border-color: var(--secondary-color);
+}
+
+/* ===============================
+   Formulários
+   =============================== */
+form {
+  background-color: #fff;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+form .form-control {
+  border-radius: 5px;
+  padding: 0.5rem 0.75rem;
+}
+
+form .form-control:focus {
+  border-color: var(--secondary-color);
+  box-shadow: 0 0 0 0.2rem rgba(220,53,69,0.25);
+}
+
+/* ===============================
+   Títulos
+   =============================== */
+h1, h2, h3, h4, h5, h6 {
+  color: var(--primary-color);
+  font-weight: 600;
+}
+
+/* ===============================
+   Containers e centralização
+   =============================== */
+.container-centered {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 80vh;
+}
+
+/* Alertas */
+.alert {
+  border-radius: 8px;
+  margin-top: 1rem;
+}
+
+/* Tabelas (para relatórios) */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1.5rem;
+}
+
+table th {
+  background-color: var(--primary-color);
+  color: #fff;
+  font-weight: 500;
+  padding: 0.75rem;
+  text-align: left;
+}
+
+table td {
+  padding: 0.75rem;
+  border-bottom: 1px solid #dee2e6;
+}
+
+/* Alerta fixo centralizado */
+.alert-warning {
+  border-radius: 8px;
+  font-weight: 500;
+  font-size: 1rem;
+}
+
+/* Footer */
+footer {
+  background-color: #f8f9fa;
+  color: #c82333; /* Vermelho para identidade */
+  font-weight: 500;
+  font-size: 0.9rem;
+  border-top: 1px solid #dc3545;
+}
+
+/* Links */
+a {
+  color: var(--primary-color);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+a:hover {
+  color: var(--secondary-color);
+  text-decoration: underline;
+}

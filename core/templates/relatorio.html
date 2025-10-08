@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<section id="relatorio" class="section-padding">
+  <div class="container">
+    <div class="section-header text-center">
+      <h2 class="section-title wow fadeInDown" data-wow-delay="0.3s">Relatório Financeiro</h2>
+      <p>Veja o resumo dos gastos e o total de despesas.</p>
+    </div>
+
+    <div class="row justify-content-center mt-4">
+      <div class="col-lg-10">
+        <table class="table table-striped table-hover wow fadeInUp" data-wow-delay="0.4s">
+          <thead class="thead-dark">
+            <tr>
+              <th>Data</th>
+              <th>Descrição</th>
+              <th>Pessoa</th>
+              <th class="text-right">Valor (R$)</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for gasto in gastos %}
+            <tr>
+              <td>{{ gasto.data|date:"d/m/Y" }}</td>
+              <td>{{ gasto.descricao }}</td>
+              <td>{{ gasto.pessoa.nome }}</td>
+              <td class="text-right">{{ gasto.valor|floatformat:2 }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+              <td colspan="4" class="text-center">Nenhum gasto registrado.</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+          {% if total %}
+          <tfoot>
+            <tr>
+              <th colspan="3" class="text-right">Total:</th>
+              <th class="text-right">R$ {{ total|floatformat:2 }}</th>
+            </tr>
+          </tfoot>
+          {% endif %}
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
