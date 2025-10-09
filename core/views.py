@@ -10,6 +10,7 @@ from django.views.generic.edit import UpdateView
 
 from .models import Pessoa, Banco, GastoMensal
 from .forms import GastoForm, PessoaForm
+from .validators import Validator
 
 # Tela inicial (Index)
 class IndexView(TemplateView):
@@ -25,34 +26,37 @@ class IndexView(TemplateView):
 # Função para cadastrar o usuário no sistema
 def cadastro_usuario(request):
     if request.method == 'POST':
-        cpf = request.POST['cpf']
-        nome = request.POST['nome']
-        sexo = request.POST['sexo']
-        data_nascimento = request.POST['data_nascimento']
-        username = request.POST['username']
-        password = request.POST['password']
+        post = request.POST
+        dados = post.dict()  # converte QueryDict pra dict simples (útil no template)
 
-        # Evita duplicidade de usernames
-        if User.objects.filter(username=username).exists():
-            return render(request, 'cadastro_usuario.html', {'erro': 'Usuário já existe.'})
+        cpf = post.get('cpf', '').strip()
+        nome = post.get('nome', '').strip()
+        sexo = post.get('sexo', '').strip()
+        data_nascimento = post.get('data_nascimento', '').strip()
+        username = post.get('username', '').strip()
+        password = post.get('password', '')
 
-        # Cria o usuário
-        user = User.objects.create_user(username=username, password=password)
-        user.save()
+        # Validações
+        # if Validator.nome_igual_usuario(nome, username):
+        #     erro = "O nome não pode ser igual ao nome de usuário."
+        if Validator.cpf_existente(cpf):
+            erro = "Este CPF já está cadastrado."
+        elif not Validator.cpf(cpf):
+            erro = "CPF inválido. Verifique e tente novamente."
+        elif Validator.usuario_existente(username):
+            erro = "Usuário já existe."
+        elif (msg := Validator.senha(password)):
+            erro = msg
+        else:
+            user = User.objects.create_user(username=username, password=password)
+            Pessoa.objects.create(
+                user=user, cpf=cpf, nome=nome, sexo=sexo, data_nascimento=data_nascimento
+            )
+            login(request, user)
+            return redirect('cadastro_gastos')
 
-        # Cria a Pessoa VINCULADA ao usuário
-        pessoa = Pessoa.objects.create(
-            user=user,
-            cpf=cpf,
-            nome=nome,
-            sexo=sexo,
-            data_nascimento=data_nascimento
-        )
-
-        # Login automático
-        login(request, user)
-
-        return redirect('cadastro_gastos')
+        # Erro, renderiza novamente mantendo os dados preenchidos
+        return render(request, 'cadastro_usuario.html', {'erro': erro, 'dados': dados})
 
     return render(request, 'cadastro_usuario.html')
 
@@ -78,7 +82,7 @@ class EditarPerfilView(LoginRequiredMixin, UpdateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['username'] = self.request.user.username  # 👈 manda o nome de usuário pro template
+        context['username'] = self.request.user.username
         return context
 
     def form_valid(self, form):
@@ -91,15 +95,9 @@ class GastoCreateView(LoginRequiredMixin, FormView):
     form_class = GastoForm
     success_url = reverse_lazy('relatorio')
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['bancos'] = Banco.objects.all()
-        return context
-
     def form_valid(self, form):
-        pessoa = self.request.user.pessoa
         gasto = form.save(commit=False)
-        gasto.pessoa = pessoa
+        gasto.pessoa = self.request.user.pessoa
         gasto.save()
         messages.success(self.request, 'Gasto registrado com sucesso!')
         return super().form_valid(form)

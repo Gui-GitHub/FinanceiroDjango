@@ -1,6 +1,8 @@
+from datetime import datetime
 from django import forms
-from .models import Pessoa, Banco, GastoMensal
-from django.forms.widgets import SelectDateWidget
+
+from .models import Pessoa, GastoMensal
+from decimal import Decimal
 
 # Formulário de Pessoa
 class PessoaForm(forms.ModelForm):
@@ -41,9 +43,31 @@ class PessoaForm(forms.ModelForm):
 
 # Formulário de Gastos Mensais
 class GastoForm(forms.ModelForm):
+    banco = forms.ChoiceField(choices=GastoMensal.BANCO_CHOICES, widget=forms.Select(attrs={'class':'form-control'}))
+    mes = forms.CharField(widget=forms.TextInput(attrs={'type':'month','class':'form-control'}))
+    valor = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control','id':'valor'}))
+
     class Meta:
         model = GastoMensal
-        fields = ['banco', 'mes', 'valor']
+        fields = ['descricao', 'banco', 'mes', 'valor']
         widgets = {
-            'mes': forms.DateInput(attrs={'type': 'month'}),
+            'descricao': forms.TextInput(attrs={'class':'form-control', 'placeholder':'Digite a descrição'}),
         }
+
+    def clean_valor(self):
+        valor = self.cleaned_data['valor']
+        # Transforma string "123" para Decimal("1234.56")
+        if isinstance(valor, str):
+            valor = valor.replace('.', '').replace(',', '.')
+        try:
+            return Decimal(valor)
+        except:
+            raise forms.ValidationError("Informe um número válido.")
+
+    def clean_mes(self):
+        mes = self.cleaned_data['mes']
+        # transforma string "YYYY-MM" -> date "YYYY-MM-01"
+        try:
+            return datetime.strptime(mes + '-01', '%Y-%m-%d').date()
+        except:
+            raise forms.ValidationError("Informe uma data válida.")

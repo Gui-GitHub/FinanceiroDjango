@@ -39,9 +39,17 @@ class Banco(Base):
     
 # Gastos Mensais
 class GastoMensal(Base):
+    BANCO_CHOICES = [
+        ('Itau', 'Itaú'),
+        ('Bradesco', 'Bradesco'),
+        ('Santander', 'Santander'),
+        ('Nubank', 'Nubank'),
+    ]
+
     pessoa = models.ForeignKey(Pessoa, on_delete=models.CASCADE, related_name='gastos')
-    banco = models.ForeignKey(Banco, on_delete=models.CASCADE, related_name='gastos')
-    mes = models.DateField('Mês e Ano')  # Podemos usar o dia 1 do mês para simplificar
+    banco = models.CharField('Banco', max_length=50, choices=BANCO_CHOICES)
+    descricao = models.CharField('Descrição', max_length=200)
+    mes = models.DateField('Mês e Ano')
     valor = models.DecimalField('Valor gasto', max_digits=10, decimal_places=2)
 
     class Meta:

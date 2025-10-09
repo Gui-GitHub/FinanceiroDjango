@@ -137,3 +137,9 @@ a:hover {
   color: var(--secondary-color);
   text-decoration: underline;
 }
+
+/* imagem */
+
+img {
+  height: 50px;
+}
