@@ -1,6 +1,5 @@
 from django.db import models
-
-from django.db import models
+from django.contrib.auth.models import User
 
 # Classe padrão na criação
 class Base(models.Model):
@@ -13,10 +12,11 @@ class Base(models.Model):
 
 # Campo da Pessoa
 class Pessoa(Base):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='pessoa', null=True, blank=True)
     cpf = models.CharField('CPF', max_length=14, unique=True)
     nome = models.CharField('Nome', max_length=100)
     sexo = models.CharField('Sexo', max_length=20)
-    data_nascimento = models.DateField('Data de nascimento')
+    data_nascimento = models.DateField(null=True, blank=True)
 
     class Meta:
         verbose_name = 'Pessoa'

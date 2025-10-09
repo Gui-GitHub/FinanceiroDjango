@@ -121,5 +121,5 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# Quando se deslogar, vai para a página principal
-LOGOUT_REDIRECT_URL = 'index'
+LOGIN_URL = '/login/'
+LOGIN_REDIRECT_URL = '/'

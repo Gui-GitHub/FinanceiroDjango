@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<section id="editar-perfil" class="section-padding">
+  <div class="container">
+    <div class="section-header text-center">
+      <h2 class="section-title wow fadeInDown" data-wow-delay="0.3s">Editar Meus Dados</h2>
+    </div>
+
+    <div class="row justify-content-center">
+      <div class="col-lg-6 col-md-8">
+        <form method="POST" class="wow fadeInUp" data-wow-delay="0.4s">
+          {% csrf_token %}
+
+          <div class="form-group">
+            <label for="nome">Nome</label>
+            <input type="text" id="nome" name="nome" value="{{ pessoa.nome }}" class="form-control" required>
+          </div>
+
+          <div class="form-group">
+            <label for="sexo">Sexo</label>
+            <select id="sexo" name="sexo" class="form-control" required>
+              <option value="Masculino" {% if pessoa.sexo == 'Masculino' %}selected{% endif %}>Masculino</option>
+              <option value="Feminino" {% if pessoa.sexo == 'Feminino' %}selected{% endif %}>Feminino</option>
+              <option value="Outro" {% if pessoa.sexo == 'Outro' %}selected{% endif %}>Outro</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="data_nascimento">Data de nascimento</label>
+            <input type="date" id="data_nascimento" name="data_nascimento"
+                   value="{{ pessoa.data_nascimento|date:'Y-m-d' }}" class="form-control" required>
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-block mt-3">Salvar alterações</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
