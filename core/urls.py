@@ -10,5 +10,5 @@ urlpatterns = [
     path('cadastro-gasto/', views.GastoCreateView.as_view(), name='cadastro_gastos'),
     path('relatorio/', views.RelatorioView.as_view(), name='relatorio'),
     path('cadastro-usuario/', views.cadastro_usuario, name='cadastro_usuario'),
-    # path('editar-perfil/', views.editar_perfil, name='editar_perfil'),
+    path('editar-perfil/', views.EditarPerfilView.as_view(), name='editar_perfil'),
 ]

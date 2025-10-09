@@ -6,9 +6,37 @@ from django.forms.widgets import SelectDateWidget
 class PessoaForm(forms.ModelForm):
     class Meta:
         model = Pessoa
-        fields = ['nome', 'sexo', 'data_nascimento']
+        fields = ['cpf', 'nome', 'sexo', 'data_nascimento']
         widgets = {
-            'data_nascimento': SelectDateWidget(years=range(1900, 2020))
+            'cpf': forms.TextInput(attrs={
+                'class': 'form-control',
+                'readonly': 'readonly',
+            }),
+            'nome': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Digite o nome completo',
+                'required': True,
+            }),
+            'sexo': forms.Select(choices=[
+                ('', 'Selecione'),
+                ('Masculino', 'Masculino'),
+                ('Feminino', 'Feminino'),
+                ('Outro', 'Outro'),
+            ], attrs={
+                'class': 'form-control',
+                'required': True,
+            }),
+            'data_nascimento': forms.DateInput(
+                format='%Y-%m-%d',
+                attrs={
+                    'type': 'date',
+                    'class': 'form-control',
+                    'required': True,
+                }
+            ),
+        }
+        input_formats = {
+            'data_nascimento': ['%Y-%m-%d', '%d/%m/%Y']
         }
 
 # Formulário de Gastos Mensais

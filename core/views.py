@@ -6,9 +6,10 @@ from django.contrib.auth.models import User
 from django.contrib.auth import login
 from django.shortcuts import render, redirect
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.generic.edit import UpdateView
 
 from .models import Pessoa, Banco, GastoMensal
-from .forms import GastoForm
+from .forms import GastoForm, PessoaForm
 
 # Tela inicial (Index)
 class IndexView(TemplateView):
@@ -35,20 +36,20 @@ def cadastro_usuario(request):
         if User.objects.filter(username=username).exists():
             return render(request, 'cadastro_usuario.html', {'erro': 'Usuário já existe.'})
 
-        # Cria o usuário com hash automático da senha
+        # Cria o usuário
         user = User.objects.create_user(username=username, password=password)
         user.save()
 
-        # Cria o registro de Pessoa vinculado
+        # Cria a Pessoa VINCULADA ao usuário
         pessoa = Pessoa.objects.create(
+            user=user,
             cpf=cpf,
             nome=nome,
             sexo=sexo,
             data_nascimento=data_nascimento
         )
-        pessoa.save()
 
-        # Faz login automático após cadastro
+        # Login automático
         login(request, user)
 
         return redirect('cadastro_gastos')
@@ -56,7 +57,33 @@ def cadastro_usuario(request):
     return render(request, 'cadastro_usuario.html')
 
 # Edição de perfil do funcionário
-# def editar_perfil(request)
+class EditarPerfilView(LoginRequiredMixin, UpdateView):
+    model = Pessoa
+    form_class = PessoaForm
+    template_name = 'editar_perfil.html'
+    success_url = reverse_lazy('editar_perfil')
+
+    def get_object(self, queryset=None):
+        user = self.request.user
+        try:
+            return user.pessoa
+        except Pessoa.DoesNotExist:
+            pessoa = Pessoa.objects.create(
+                user=user,
+                nome=user.username or "Novo usuário",
+                sexo='Outro',
+                data_nascimento=None
+            )
+            return pessoa
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['username'] = self.request.user.username  # 👈 manda o nome de usuário pro template
+        return context
+
+    def form_valid(self, form):
+        messages.success(self.request, "Seus dados foram atualizados com sucesso!")
+        return super().form_valid(form)
 
 # Cadastrar seus gastos
 class GastoCreateView(LoginRequiredMixin, FormView):
