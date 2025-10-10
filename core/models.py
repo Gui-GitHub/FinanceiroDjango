@@ -25,7 +25,7 @@ class Pessoa(Base):
     def __str__(self):
         return self.nome
 
-# Campo do banco
+# Campo do banco (Possivelmente irei deletar)
 class Banco(Base):
     nome = models.CharField('Nome', max_length=100)
     descricao = models.TextField('Descrição', max_length=200, blank=True)

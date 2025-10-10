@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% block title %}Meus Gastos{% endblock %}
+
+{% block content %}
+<section class="py-5">
+  <div class="container">
+    <h2 class="text-center mb-4">Meus Gastos</h2>
+
+    {% if messages %}
+      {% for message in messages %}
+        <div class="alert alert-success text-center">{{ message }}</div>
+      {% endfor %}
+    {% endif %}
+
+    {% if gastos %}
+      <table class="table table-bordered text-center align-middle">
+        <thead class="table-light">
+          <tr>
+            <th>Descrição</th>
+            <th>Banco</th>
+            <th>Mês</th>
+            <th>Valor (R$)</th>
+            <th colspan="2">Ações</th> <!-- agora temos duas ações -->
+          </tr>
+        </thead>
+        <tbody>
+          {% for gasto in gastos %}
+          <tr>
+            <td>{{ gasto.descricao }}</td>
+            <td>{{ gasto.banco }}</td>
+            <td>{{ gasto.mes|date:"m/Y" }}</td>
+            <td>{{ gasto.valor }}</td>
+            <td>
+              <a href="{% url 'editar_gasto' gasto.id %}" class="btn btn-warning btn-sm">Editar</a>
+            </td>
+            <td>
+              <form action="{% url 'excluir_gasto' gasto.id %}" method="POST" onsubmit="return confirm('Tem certeza que deseja excluir este gasto?');" class="d-inline">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger btn-sm" title="Excluir">
+                  <i class="bi bi-trash"></i>
+                </button>
+              </form>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% else %}
+      <p class="text-center">Você ainda não cadastrou nenhum gasto.</p>
+    {% endif %}
+
+    <div class="text-center mt-4">
+      <a href="{% url 'cadastro_gastos' %}" class="btn btn-primary">Cadastrar Novo Gasto</a>
+    </div>
+  </div>
+</section>
+{% endblock %}

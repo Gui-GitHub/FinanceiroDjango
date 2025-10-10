@@ -40,7 +40,7 @@ class Validator:
     def usuario_existente(username):
         return User.objects.filter(username=username).exists()
 
-    # Validador de nome
+    # Validador de nome (Não utilizado no momento)
     # @staticmethod
     # def nome_igual_usuario(nome, username):
     #     return nome.strip().lower() == username.strip().lower()

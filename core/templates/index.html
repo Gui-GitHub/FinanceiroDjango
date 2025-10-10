@@ -17,7 +17,7 @@
     </p>
 
     <div class="d-flex justify-content-center flex-wrap">
-      <a href="{% url 'cadastro_gastos' %}" class="btn btn-primary btn-lg m-2">Registrar Gastos</a>
+      <a href="{% url 'meus_gastos' %}" class="btn btn-warning btn-lg m-2">Meus Gastos</a>
       <a href="{% url 'relatorio' %}" class="btn btn-info btn-lg m-2">Ver Relatório</a>
     </div>
 
@@ -29,8 +29,8 @@
         <p>Pessoas cadastradas</p>
       </div>
       <div class="col-md-6">
-        <h3>{{ total_bancos }}</h3>
-        <p>Bancos registrados</p>
+        <h3>{{ total_gastos }}</h3>
+        <p>Gastos registrados</p>
       </div>
     </div>
   </div>

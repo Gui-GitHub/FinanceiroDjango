@@ -43,22 +43,31 @@ class PessoaForm(forms.ModelForm):
 
 # Formulário de Gastos Mensais
 class GastoForm(forms.ModelForm):
-    banco = forms.ChoiceField(choices=GastoMensal.BANCO_CHOICES, widget=forms.Select(attrs={'class':'form-control'}))
-    mes = forms.CharField(widget=forms.TextInput(attrs={'type':'month','class':'form-control'}))
-    valor = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control','id':'valor'}))
+    banco = forms.ChoiceField(
+        choices=GastoMensal.BANCO_CHOICES,
+        widget=forms.Select(attrs={'class': 'form-control'})
+    )
+    mes = forms.CharField(
+        widget=forms.TextInput(attrs={'type': 'month', 'class': 'form-control'})
+    )
+    valor = forms.CharField(
+        widget=forms.TextInput(attrs={'class': 'form-control', 'id': 'valor'})
+    )
 
     class Meta:
         model = GastoMensal
         fields = ['descricao', 'banco', 'mes', 'valor']
         widgets = {
-            'descricao': forms.TextInput(attrs={'class':'form-control', 'placeholder':'Digite a descrição'}),
+            'descricao': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Digite a descrição'}),
         }
 
     def clean_valor(self):
         valor = self.cleaned_data['valor']
-        # Transforma string "123" para Decimal("1234.56")
+
         if isinstance(valor, str):
-            valor = valor.replace('.', '').replace(',', '.')
+            if ',' in valor:  # apenas se o usuário digitar com vírgula
+                valor = valor.replace('.', '').replace(',', '.')
+
         try:
             return Decimal(valor)
         except:
@@ -66,8 +75,12 @@ class GastoForm(forms.ModelForm):
 
     def clean_mes(self):
         mes = self.cleaned_data['mes']
-        # transforma string "YYYY-MM" -> date "YYYY-MM-01"
         try:
             return datetime.strptime(mes + '-01', '%Y-%m-%d').date()
         except:
             raise forms.ValidationError("Informe uma data válida.")
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        if self.instance and self.instance.mes:
+            self.initial['mes'] = self.instance.mes.strftime('%Y-%m')

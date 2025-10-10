@@ -15,9 +15,7 @@ body {
   padding: 0;
 }
 
-/* ===============================
-   Navbar
-   =============================== */
+/* Navbar */
 .navbar {
   background-color: var(--primary-color);
 }
@@ -32,9 +30,7 @@ body {
   color: #ffd6d6 !important;
 }
 
-/* ===============================
-   Botões
-   =============================== */
+/* Botões */
 .btn-primary {
   background-color: var(--primary-color);
   border-color: var(--primary-color);
@@ -46,14 +42,26 @@ body {
   border-color: var(--secondary-color);
 }
 
-/* ===============================
-   Formulários
-   =============================== */
+.btn-danger.btn-sm {
+  padding: 0.25rem 0.4rem;
+  font-size: 0.85rem;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+}
+
+.btn-danger.btn-sm i {
+  font-size: 1rem;
+  line-height: 1;
+}
+
+/* Formulários */
 form {
-  background-color: #fff;
   padding: 2rem;
   border-radius: 10px;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
 }
 
 form .form-control {
@@ -66,17 +74,13 @@ form .form-control:focus {
   box-shadow: 0 0 0 0.2rem rgba(220,53,69,0.25);
 }
 
-/* ===============================
-   Títulos
-   =============================== */
+/* Títulos */
 h1, h2, h3, h4, h5, h6 {
   color: var(--primary-color);
   font-weight: 600;
 }
 
-/* ===============================
-   Containers e centralização
-   =============================== */
+/* Containers e centralização */
 .container-centered {
   display: flex;
   justify-content: center;
@@ -86,8 +90,10 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Alertas */
 .alert {
+  max-width: 500px;
+  margin: 0 auto 20px;
   border-radius: 8px;
-  margin-top: 1rem;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
 }
 
 /* Tabelas (para relatórios) */
@@ -139,7 +145,6 @@ a:hover {
 }
 
 /* imagem */
-
 img {
   height: 50px;
 }
