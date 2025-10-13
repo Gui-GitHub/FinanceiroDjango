@@ -5,7 +5,6 @@ from django.views.generic import FormView, TemplateView
 from django.contrib.auth import authenticate, login
 from django.views.generic.edit import UpdateView
 from django.views.generic import ListView, View
-from django.utils.dateformat import DateFormat
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib.auth import logout

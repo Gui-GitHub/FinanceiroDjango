@@ -48,6 +48,7 @@ class GastoForm(forms.ModelForm):
         widget=forms.Select(attrs={'class': 'form-control'})
     )
     mes = forms.CharField(
+        label='Mês',
         widget=forms.TextInput(attrs={'type': 'month', 'class': 'form-control'})
     )
     valor = forms.CharField(
