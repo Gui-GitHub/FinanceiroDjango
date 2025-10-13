@@ -1,14 +1,18 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, get_object_or_404
 from django.views.generic import FormView, TemplateView
 from django.contrib.auth import authenticate, login
 from django.views.generic.edit import UpdateView
 from django.views.generic import ListView, View
+from django.utils.dateformat import DateFormat
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib.auth import logout
 from django.urls import reverse_lazy
+from django.http import JsonResponse
 from django.contrib import messages
+import json
 
 from .forms import GastoForm, PessoaForm
 from .models import Pessoa, GastoMensal
@@ -165,8 +169,46 @@ class RelatorioView(LoginRequiredMixin, TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         pessoa = self.request.user.pessoa
-        context['gastos'] = GastoMensal.objects.filter(pessoa=pessoa).order_by('mes')
+        gastos_qs = GastoMensal.objects.filter(pessoa=pessoa).order_by('mes')
+
+        gastos_list = [
+            {
+                'mes': g.mes.strftime('%Y-%m-%d'),
+                'banco': g.banco,
+                'valor': float(g.valor),
+                'descricao': g.descricao
+            } for g in gastos_qs
+        ]
+        context['gastos_json'] = json.dumps(gastos_list)
         return context
+
+# Para que quando clicar em filtrar não recarregue toda a página  
+@login_required
+def relatorio_api(request):
+    pessoa = request.user.pessoa
+    qs = GastoMensal.objects.filter(pessoa=pessoa).order_by('mes')
+
+    # Lendo filtros do GET
+    data_inicio = request.GET.get('data_inicio')
+    data_fim = request.GET.get('data_fim')
+    banco = request.GET.get('banco')
+
+    if data_inicio:
+        qs = qs.filter(mes__gte=data_inicio)
+    if data_fim:
+        qs = qs.filter(mes__lte=data_fim)
+    if banco:
+        qs = qs.filter(banco=banco)
+
+    data = [
+        {
+            'mes': g.mes.strftime('%Y-%m-%d'),
+            'banco': g.banco,
+            'valor': float(g.valor),
+            'descricao': g.descricao
+        } for g in qs
+    ]
+    return JsonResponse({'gastos': data})
     
 # Definição de logout
 def logout_view(request):

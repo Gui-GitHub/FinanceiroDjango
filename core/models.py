@@ -44,6 +44,7 @@ class GastoMensal(Base):
         ('Bradesco', 'Bradesco'),
         ('Santander', 'Santander'),
         ('Nubank', 'Nubank'),
+        ('Outro', 'Outro'),
     ]
 
     pessoa = models.ForeignKey(Pessoa, on_delete=models.CASCADE, related_name='gastos')

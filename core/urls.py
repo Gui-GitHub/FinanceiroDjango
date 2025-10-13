@@ -14,4 +14,5 @@ urlpatterns = [
     path('meus-gastos/', views.GastoListView.as_view(), name='meus_gastos'),
     path('meus-gastos/excluir/<int:pk>/', views.GastoDeleteView.as_view(), name='excluir_gasto'),
     path('editar-gasto/<int:pk>/', views.GastoUpdateView.as_view(), name='editar_gasto'),
+    path('api/relatorio/', views.relatorio_api, name='api_relatorio'),
 ]
