@@ -1,18 +1,17 @@
-from django.views.generic import FormView, TemplateView
-from django.urls import reverse_lazy
-from django.contrib import messages
-from django.contrib.auth import logout
-from django.contrib.auth.models import User
-from django.contrib.auth import authenticate, login
-from django.shortcuts import render, redirect
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.shortcuts import redirect, get_object_or_404
+from django.views.generic import FormView, TemplateView
+from django.contrib.auth import authenticate, login
 from django.views.generic.edit import UpdateView
 from django.views.generic import ListView, View
-from django.shortcuts import redirect, get_object_or_404
-from .models import GastoMensal
+from django.shortcuts import render, redirect
+from django.contrib.auth.models import User
+from django.contrib.auth import logout
+from django.urls import reverse_lazy
+from django.contrib import messages
 
-from .models import Pessoa, Banco, GastoMensal
 from .forms import GastoForm, PessoaForm
+from .models import Pessoa, GastoMensal
 from .validators import Validator
 
 # Tela inicial (Index)
@@ -21,7 +20,7 @@ class IndexView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        # informações resumidas, como número de pessoas cadastradas E bancos
+        # informações resumidas
         context['total_pessoas'] = Pessoa.objects.count()
         context['total_gastos'] = GastoMensal.objects.count()
         return context

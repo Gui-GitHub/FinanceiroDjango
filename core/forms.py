@@ -1,8 +1,8 @@
 from datetime import datetime
+from decimal import Decimal
 from django import forms
 
 from .models import Pessoa, GastoMensal
-from decimal import Decimal
 
 # Formulário de Pessoa
 class PessoaForm(forms.ModelForm):

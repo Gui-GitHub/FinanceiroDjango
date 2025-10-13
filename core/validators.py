@@ -1,5 +1,6 @@
 import re
 from django.contrib.auth.models import User
+
 from .models import Pessoa
 
 # Valida os campos antes da pessoa se cadastrar
@@ -35,7 +36,7 @@ class Validator:
     def cpf_existente(cpf):
         return Pessoa.objects.filter(cpf=cpf).exists()
 
-    # Validador de USUÁRIO, verifica se o cpf já existe em outro login
+    # Validador de USUÁRIO, verifica se o usuário já existe em outro login
     @staticmethod
     def usuario_existente(username):
         return User.objects.filter(username=username).exists()
