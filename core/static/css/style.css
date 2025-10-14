@@ -311,4 +311,11 @@ img {
   .hide-legend-mobile {
     display: none !important;
   }
+
+  /* Botões meus gastos */
+  .btn-primary,
+  .btn-success,
+  .btn-outline-danger{
+    margin: 5px 0px 5px 0px;
+  }
 }

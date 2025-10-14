@@ -6,11 +6,14 @@ from django.contrib.auth import authenticate, login
 from django.views.generic.edit import UpdateView
 from django.views.generic import ListView, View
 from django.shortcuts import render, redirect
+from django.utils.timezone import make_aware
 from django.contrib.auth.models import User
 from django.contrib.auth import logout
 from django.urls import reverse_lazy
 from django.http import JsonResponse
 from django.contrib import messages
+from datetime import datetime
+import random
 import json
 
 from .forms import GastoForm, PessoaForm
@@ -160,6 +163,52 @@ class GastoDeleteView(LoginRequiredMixin, View):
         gasto.delete()
         messages.success(request, "Gasto excluído com sucesso!")
         return redirect('meus_gastos')
+    
+# Gerar gastos aleatórios para testes
+@login_required
+def gerar_gastos_exemplo(request):
+    pessoa = request.user.pessoa
+
+    bancos = ['Itau', 'Bradesco', 'Santander', 'Nubank', 'Outro']
+    gastos_gerados = []
+
+    for _ in range(10):
+        # Banco aleatório
+        banco = random.choice(bancos)
+
+        # Valor entre 500 e 3000 (R$)
+        valor = round(random.uniform(500, 3000), 2)
+
+        # Data aleatória entre 01/2025 e 12/2025
+        mes_aleatorio = random.randint(1, 12)
+        data = datetime(2025, mes_aleatorio, random.randint(1, 28))
+        data = make_aware(data)
+
+        gasto = GastoMensal.objects.create(
+            pessoa=pessoa,
+            descricao='Gasto Teste',
+            banco=banco,
+            mes=data,
+            valor=valor
+        )
+        gastos_gerados.append(gasto)
+
+    messages.success(request, f"{len(gastos_gerados)} gastos de exemplo foram adicionados com sucesso!")
+    return redirect('meus_gastos')
+
+# Função para deletar os gastos
+@login_required
+def excluir_todos_gastos(request):
+    pessoa = request.user.pessoa
+    total = GastoMensal.objects.filter(pessoa=pessoa).count()
+
+    if total == 0:
+        messages.info(request, "Você não possui gastos para excluir.")
+    else:
+        GastoMensal.objects.filter(pessoa=pessoa).delete()
+        messages.success(request, f"Todos os {total} gastos foram excluídos com sucesso!")
+
+    return redirect('meus_gastos')
 
 # Relatório gerado
 class RelatorioView(LoginRequiredMixin, TemplateView):

@@ -20,7 +20,7 @@
             <th>Banco</th>
             <th>Mês</th>
             <th>Valor (R$)</th>
-            <th colspan="2">Ações</th> <!-- agora temos duas ações -->
+            <th colspan="2">Ações</th>
           </tr>
         </thead>
         <tbody>
@@ -50,7 +50,17 @@
     {% endif %}
 
     <div class="text-center mt-4">
-      <a href="{% url 'cadastro_gastos' %}" class="btn btn-primary">Cadastrar Novo Gasto</a>
+      <a href="{% url 'cadastro_gastos' %}" class="btn btn-primary me-2">Cadastrar Novo Gasto</a>
+
+      <form action="{% url 'gerar_gastos_exemplo' %}" method="post" class="d-inline">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-success me-2">Gerar Gastos Exemplo</button>
+      </form>
+
+      <form action="{% url 'excluir_todos_gastos' %}" method="post" class="d-inline" onsubmit="return confirm('⚠️ Tem certeza que deseja excluir TODOS os gastos?');">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-outline-danger">Excluir Todos os Gastos</button>
+      </form>
     </div>
   </div>
 </section>

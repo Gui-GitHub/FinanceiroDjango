@@ -1,0 +1,1 @@
+# python manage.py test <nome_da_aplicacao>
