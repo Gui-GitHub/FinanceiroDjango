@@ -10,8 +10,9 @@ class Base(models.Model):
     class Meta:
         abstract = True
 
-# Campo da Pessoa
+# Tabela de Pessoa
 class Pessoa(Base):
+    # Campos
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='pessoa', null=True, blank=True)
     cpf = models.CharField('CPF', max_length=14, unique=True)
     nome = models.CharField('Nome', max_length=100)
@@ -27,6 +28,7 @@ class Pessoa(Base):
     
 # Gastos Mensais
 class GastoMensal(Base):
+    # Lista de bancos
     BANCO_CHOICES = [
         ('Itau', 'Itaú'),
         ('Bradesco', 'Bradesco'),
@@ -35,6 +37,7 @@ class GastoMensal(Base):
         ('Outro', 'Outro'),
     ]
 
+    # Campos
     pessoa = models.ForeignKey(Pessoa, on_delete=models.CASCADE, related_name='gastos')
     banco = models.CharField('Banco', max_length=50, choices=BANCO_CHOICES)
     descricao = models.CharField('Descrição', max_length=200)
@@ -47,4 +50,4 @@ class GastoMensal(Base):
         ordering = ['mes']
 
     def __str__(self):
-        return f'{self.pessoa.nome} - {self.banco.nome} - {self.mes.strftime("%m/%Y")}: {self.valor}'
+        return f'{self.pessoa.nome} - {self.banco} - {self.mes.strftime("%m/%Y")}: {self.valor}'
