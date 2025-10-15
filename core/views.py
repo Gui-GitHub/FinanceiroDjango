@@ -172,7 +172,7 @@ def gerar_gastos_exemplo(request):
     bancos = ['Itau', 'Bradesco', 'Santander', 'Nubank', 'Outro']
     gastos_gerados = []
 
-    for _ in range(10):
+    for _ in range(5):
         # Banco aleatório
         banco = random.choice(bancos)
 
