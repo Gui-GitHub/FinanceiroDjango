@@ -42,6 +42,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'whitenoise.middleware.WhiteNoiseMiddleware',  # css
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -70,8 +71,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'FinanceiroDjango.wsgi.application'
 
-
-# Database
+# Database (Banco de dados)
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
 DATABASES = {
@@ -96,7 +96,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Colocando a localização no Brasil
 
 LANGUAGE_CODE = 'pt-br'
@@ -111,6 +110,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Default primary key field type
@@ -118,5 +118,9 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+# Redirecionando
 LOGIN_URL = '/login/'
 LOGIN_REDIRECT_URL = '/'
+
+# Compressão e cache inteligente
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
