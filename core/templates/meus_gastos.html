@@ -57,11 +57,18 @@
         <button type="submit" class="btn btn-success me-2">Gerar Gastos Exemplo</button>
       </form>
 
-      <form action="{% url 'excluir_todos_gastos' %}" method="post" class="d-inline" onsubmit="return confirm('⚠️ Tem certeza que deseja excluir TODOS os gastos?');">
+    </div>
+
+    <div class="text-center mt-4">
+    <form action="{% url 'excluir_todos_gastos' %}" method="post" class="d-inline" onsubmit="return confirm('⚠️ Tem certeza que deseja excluir TODOS os gastos?');">
         {% csrf_token %}
         <button type="submit" class="btn btn-outline-danger">Excluir Todos os Gastos</button>
       </form>
     </div>
+
+    <p class="mt-3 text-center">
+      <a href="{% url 'index' %}" class="text-decoration-none">Voltar à tela inicial</a>
+    </p>
   </div>
 </section>
 {% endblock %}
