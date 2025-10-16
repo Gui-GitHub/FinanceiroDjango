@@ -51,3 +51,27 @@ class GastoMensal(Base):
 
     def __str__(self):
         return f'{self.pessoa.nome} - {self.banco} - {self.mes.strftime("%m/%Y")}: {self.valor}'
+    
+# Ganhos Mensais
+class GanhoMensal(Base):
+    BANCO_CHOICES = [
+        ('Itau', 'Itaú'),
+        ('Bradesco', 'Bradesco'),
+        ('Santander', 'Santander'),
+        ('Nubank', 'Nubank'),
+        ('Outro', 'Outro'),
+    ]
+
+    pessoa = models.ForeignKey(Pessoa, on_delete=models.CASCADE, related_name='ganhos')
+    banco = models.CharField('Banco', max_length=50, choices=BANCO_CHOICES)
+    descricao = models.CharField('Descrição', max_length=200)
+    mes = models.DateField('Mês e Ano')
+    valor = models.DecimalField('Valor ganho', max_digits=10, decimal_places=2)
+
+    class Meta:
+        verbose_name = 'Ganho Mensal'
+        verbose_name_plural = 'Ganhos Mensais'
+        ordering = ['mes']
+
+    def __str__(self):
+        return f'{self.pessoa.nome} - {self.banco} - {self.mes.strftime("%m/%Y")}: {self.valor}'

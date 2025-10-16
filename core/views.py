@@ -16,8 +16,8 @@ from datetime import datetime
 import random
 import json
 
-from .forms import GastoForm, PessoaForm
-from .models import Pessoa, GastoMensal
+from .forms import GastoForm, GanhoForm, PessoaForm
+from .models import Pessoa, GastoMensal, GanhoMensal
 from .validators import Validator
 
 # Tela inicial (Index)
@@ -217,46 +217,116 @@ class RelatorioView(LoginRequiredMixin, TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         pessoa = self.request.user.pessoa
-        gastos_qs = GastoMensal.objects.filter(pessoa=pessoa).order_by('mes')
 
+        # Gastos, mandando para o js
+        gastos_qs = GastoMensal.objects.filter(pessoa=pessoa).order_by('mes')
         gastos_list = [
             {
-                'mes': g.mes.strftime('%Y-%m-%d'),
+                'data': g.mes.strftime('%Y-%m-%d'),
                 'banco': g.banco,
                 'valor': float(g.valor),
                 'descricao': g.descricao
             } for g in gastos_qs
         ]
         context['gastos_json'] = json.dumps(gastos_list)
+
+        # Ganhos, mandando para o js
+        ganhos_qs = GanhoMensal.objects.filter(pessoa=pessoa).order_by('mes')
+        ganhos_list = [
+            {
+                'data': g.mes.strftime('%Y-%m-%d'),
+                'banco': g.banco,
+                'valor': float(g.valor),
+                'descricao': g.descricao
+            } for g in ganhos_qs
+        ]
+        context['ganhos_json'] = json.dumps(ganhos_list)
+
         return context
 
-# Para que quando clicar em filtrar não recarregue toda a página  
+# Cadastrar ganhos
+class GanhoCreateView(LoginRequiredMixin, FormView):
+    template_name = 'cadastrar_ganho.html'
+    form_class = GanhoForm
+    success_url = reverse_lazy('meus_ganhos')
+
+    def form_valid(self, form):
+        ganho = form.save(commit=False)
+        ganho.pessoa = self.request.user.pessoa
+        ganho.save()
+        messages.success(self.request, 'Ganho registrado com sucesso!')
+        return super().form_valid(form)
+
+# Listar ganhos do usuário
+class GanhoListView(LoginRequiredMixin, ListView):
+    model = GanhoMensal
+    template_name = 'meus_ganhos.html'
+    context_object_name = 'ganhos'
+
+    def get_queryset(self):
+        return GanhoMensal.objects.filter(pessoa=self.request.user.pessoa).order_by('-mes')
+
+# Editar ganho existente
+class GanhoUpdateView(LoginRequiredMixin, UpdateView):
+    model = GanhoMensal
+    form_class = GanhoForm
+    template_name = 'editar_ganho.html'
+
+    def get_queryset(self):
+        return GanhoMensal.objects.filter(pessoa=self.request.user.pessoa)
+
+    def get_success_url(self):
+        messages.success(self.request, "Ganho atualizado com sucesso!")
+        return reverse_lazy('meus_ganhos')
+
+# Deletar um ganho
+class GanhoDeleteView(LoginRequiredMixin, View):
+    def post(self, request, pk):
+        ganho = get_object_or_404(GanhoMensal, pk=pk, pessoa=request.user.pessoa)
+        ganho.delete()
+        messages.success(request, "Ganho excluído com sucesso!")
+        return redirect('meus_ganhos')
+
+# Gerar ganhos aleatórios para testes
 @login_required
-def relatorio_api(request):
+def gerar_ganhos_exemplo(request):
     pessoa = request.user.pessoa
-    qs = GastoMensal.objects.filter(pessoa=pessoa).order_by('mes')
 
-    # Lendo filtros do GET
-    data_inicio = request.GET.get('data_inicio')
-    data_fim = request.GET.get('data_fim')
-    banco = request.GET.get('banco')
+    bancos = ['Itau', 'Bradesco', 'Santander', 'Nubank', 'Outro']
+    ganhos_gerados = []
 
-    if data_inicio:
-        qs = qs.filter(mes__gte=data_inicio)
-    if data_fim:
-        qs = qs.filter(mes__lte=data_fim)
-    if banco:
-        qs = qs.filter(banco=banco)
+    for _ in range(5):
+        banco = random.choice(bancos)
+        valor = round(random.uniform(500, 3000), 2)
+        mes_aleatorio = random.randint(1, 12)
+        data = datetime(2025, mes_aleatorio, random.randint(1, 28))
+        data = make_aware(data)
 
-    data = [
-        {
-            'mes': g.mes.strftime('%Y-%m-%d'),
-            'banco': g.banco,
-            'valor': float(g.valor),
-            'descricao': g.descricao
-        } for g in qs
-    ]
-    return JsonResponse({'gastos': data})
+        ganho = GanhoMensal.objects.create(
+            pessoa=pessoa,
+            descricao='Ganho Teste',
+            banco=banco,
+            mes=data,
+            valor=valor
+        )
+        ganhos_gerados.append(ganho)
+
+    messages.success(request, f"{len(ganhos_gerados)} ganhos de exemplo foram adicionados com sucesso!")
+    return redirect('meus_ganhos')
+
+# Excluir todos os ganhos
+@login_required
+def excluir_todos_ganhos(request):
+    pessoa = request.user.pessoa
+    total = GanhoMensal.objects.filter(pessoa=pessoa).count()
+
+    if total == 0:
+        messages.info(request, "Você não possui ganhos para excluir.")
+    else:
+        GanhoMensal.objects.filter(pessoa=pessoa).delete()
+        messages.success(request, f"Todos os {total} ganhos foram excluídos com sucesso!")
+
+    return redirect('meus_ganhos')
     
 # Definição de logout
 def logout_view(request):

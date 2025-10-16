@@ -1,10 +1,10 @@
 {% extends 'base.html' %}
-{% block title %}Meus Gastos{% endblock %}
+{% block title %}Meus Ganhos{% endblock %}
 
 {% block content %}
 <section class="py-5">
   <div class="container">
-    <h2 class="text-center mb-4">Meus Gastos</h2>
+    <h2 class="text-center mb-4">Meus Ganhos</h2>
 
     {% if messages %}
       {% for message in messages %}
@@ -12,7 +12,7 @@
       {% endfor %}
     {% endif %}
 
-    {% if gastos %}
+    {% if ganhos %}
       <table class="table table-bordered text-center align-middle">
         <thead class="table-light">
           <tr>
@@ -24,17 +24,17 @@
           </tr>
         </thead>
         <tbody>
-          {% for gasto in gastos %}
+          {% for ganho in ganhos %}
           <tr>
-            <td>{{ gasto.descricao }}</td>
-            <td>{{ gasto.banco }}</td>
-            <td>{{ gasto.mes|date:"m/Y" }}</td>
-            <td class="text-danger">-{{ gasto.valor }}</td>
+            <td>{{ ganho.descricao }}</td>
+            <td>{{ ganho.banco }}</td>
+            <td>{{ ganho.mes|date:"m/Y" }}</td>
+            <td>{{ ganho.valor }}</td>
             <td>
-              <a href="{% url 'editar_gasto' gasto.id %}" class="btn btn-warning btn-sm">Editar</a>
+              <a href="{% url 'editar_ganho' ganho.id %}" class="btn btn-warning btn-sm">Editar</a>
             </td>
             <td>
-              <form action="{% url 'excluir_gasto' gasto.id %}" method="POST" onsubmit="return confirm('Tem certeza que deseja excluir este gasto?');" class="d-inline">
+              <form action="{% url 'deletar_ganho' ganho.id %}" method="POST" onsubmit="return confirm('Tem certeza que deseja excluir este ganho?');" class="d-inline">
                 {% csrf_token %}
                 <button type="submit" class="btn btn-danger btn-sm" title="Excluir">
                   <i class="bi bi-trash"></i>
@@ -46,23 +46,22 @@
         </tbody>
       </table>
     {% else %}
-      <p class="text-center">Você ainda não cadastrou nenhum gasto.</p>
+      <p class="text-center">Você ainda não cadastrou nenhum ganho.</p>
     {% endif %}
 
     <div class="text-center mt-4">
-      <a href="{% url 'cadastro_gastos' %}" class="btn btn-primary me-2">Cadastrar Novo Gasto</a>
+      <a href="{% url 'cadastrar_ganho' %}" class="btn btn-primary me-2">Cadastrar Novo Ganho</a>
 
-      <form action="{% url 'gerar_gastos_exemplo' %}" method="post" class="d-inline">
+      <form action="{% url 'gerar_ganhos_exemplo' %}" method="post" class="d-inline">
         {% csrf_token %}
-        <button type="submit" class="btn btn-success me-2">Gerar Gastos Exemplo</button>
+        <button type="submit" class="btn btn-success me-2">Gerar Ganhos Exemplo</button>
       </form>
-
     </div>
 
     <div class="text-center mt-4">
-    <form action="{% url 'excluir_todos_gastos' %}" method="post" class="d-inline" onsubmit="return confirm('⚠️ Tem certeza que deseja excluir TODOS os gastos?');">
+      <form action="{% url 'excluir_todos_ganhos' %}" method="post" class="d-inline" onsubmit="return confirm('⚠️ Tem certeza que deseja excluir TODOS os ganhos?');">
         {% csrf_token %}
-        <button type="submit" class="btn btn-outline-danger">Excluir Todos os Gastos</button>
+        <button type="submit" class="btn btn-outline-danger">Excluir Todos os Ganhos</button>
       </form>
     </div>
 

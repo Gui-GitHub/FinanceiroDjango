@@ -2,7 +2,7 @@ from datetime import datetime
 from decimal import Decimal
 from django import forms
 
-from .models import Pessoa, GastoMensal
+from .models import Pessoa, GastoMensal, GanhoMensal
 
 # Formulário de Pessoa
 class PessoaForm(forms.ModelForm):
@@ -69,6 +69,49 @@ class GastoForm(forms.ModelForm):
             if ',' in valor:  # apenas se o usuário digitar com vírgula
                 valor = valor.replace('.', '').replace(',', '.')
 
+        try:
+            return Decimal(valor)
+        except:
+            raise forms.ValidationError("Informe um número válido.")
+
+    def clean_mes(self):
+        mes = self.cleaned_data['mes']
+        try:
+            return datetime.strptime(mes + '-01', '%Y-%m-%d').date()
+        except:
+            raise forms.ValidationError("Informe uma data válida.")
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        if self.instance and self.instance.mes:
+            self.initial['mes'] = self.instance.mes.strftime('%Y-%m')
+
+# Formulário de Ganhos Mensais
+class GanhoForm(forms.ModelForm):
+    banco = forms.ChoiceField(
+        choices=GanhoMensal.BANCO_CHOICES,
+        widget=forms.Select(attrs={'class': 'form-control'})
+    )
+    mes = forms.CharField(
+        label='Mês',
+        widget=forms.TextInput(attrs={'type': 'month', 'class': 'form-control'})
+    )
+    valor = forms.CharField(
+        widget=forms.TextInput(attrs={'class': 'form-control', 'id': 'valor'})
+    )
+
+    class Meta:
+        model = GanhoMensal
+        fields = ['descricao', 'banco', 'mes', 'valor']
+        widgets = {
+            'descricao': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Digite a descrição'}),
+        }
+
+    def clean_valor(self):
+        valor = self.cleaned_data['valor']
+        if isinstance(valor, str):
+            if ',' in valor:
+                valor = valor.replace('.', '').replace(',', '.')
         try:
             return Decimal(valor)
         except:

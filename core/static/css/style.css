@@ -175,6 +175,13 @@ img {
   margin: 0 auto;
 }
 
+#graficoGastoGanho {
+  height: 400px; /* altura do gráfico */
+  width: 400px;  /* largura do gráfico */
+  margin: 0 auto; /* centraliza */
+  margin-bottom: 48px; /* aumenta o espaço abaixo do gráfico de pizza */
+}
+
 #graficoMes canvas,
 #graficoMesBanco canvas {
   min-height: 400px !important;
@@ -222,6 +229,53 @@ img {
 #btnFiltrar:hover { background-color: #a50d25; }
 #btnResetar:hover { background-color: #5a6268; }
 #btnExportar:hover { background-color: #218838; }
+
+/* Visual aprimorado para gráficos (desktop e mobile) */
+canvas {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+  padding: 12px;
+  transition: box-shadow 0.2s;
+  /* Adiciona borda e sombra em todos tamanhos */
+  border: 1px solid #eee;
+}
+
+/* Espaçamento extra para o gráfico de pizza */
+#graficoGastoGanho {
+  height: 400px;
+  width: 400px;
+  margin: 0 auto;
+  margin-bottom: 48px; /* aumenta o espaço abaixo do gráfico de pizza */
+}
+
+/* Visual aprimorado para gráficos */
+.grafico-container {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+  padding: 24px 16px;
+  margin-bottom: 32px;
+  transition: box-shadow 0.2s;
+}
+
+.grafico-container:hover {
+  box-shadow: 0 8px 32px rgba(0,0,0,0.16);
+}
+
+.grafico-titulo {
+  font-size: 1.35rem;
+  font-weight: 600;
+  color: var(--primary-color);
+  margin-bottom: 18px;
+  text-align: center;
+  letter-spacing: 0.5px;
+}
+
+/* Espaçamento entre gráficos */
+.grafico-espaco {
+  margin-bottom: 32px;
+}
 
 /* Mobile */
 @media (max-width: 768px) {
@@ -292,19 +346,15 @@ img {
   }
 
   /* Relatórios: gráficos maiores no mobile */
-  #graficoMes,
-  #graficoMesBanco {
-    min-height: 320px !important;
-    height: 320px !important;
-    max-height: 400px;
-    width: 100% !important;
+  #graficoGastoGanho {
+    max-width: 90%;
+    max-height: 350px;
+    margin-bottom: 56px; /* ainda maior no mobile */
   }
-  #graficoMes canvas,
-  #graficoMesBanco canvas {
-    min-height: 320px !important;
-    height: 320px !important;
-    max-height: 400px;
-    width: 100% !important;
+
+  /* Esconde títulos dos gráficos no mobile */
+  .grafico-titulo {
+    display: none !important;
   }
 
   /* Esconde legendas dos gráficos no mobile */
@@ -317,5 +367,29 @@ img {
   .btn-success,
   .btn-outline-danger{
     margin: 5px 0px 5px 0px;
+  }
+
+  /* Gráficos: mais espaço entre eles no mobile */
+  .grafico-container {
+    padding: 12px 6px;
+    margin-bottom: 40px;
+  }
+
+  /* Canvas: ocupa quase toda largura, altura reduzida, borda e sombra mantidas */
+  .grafico-container canvas,
+  canvas {
+    max-width: 98vw;
+    height: 260px !important;
+    min-height: 180px !important;
+    margin: 0 auto;
+    padding: 6px;
+    border-radius: 12px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+    border: 1px solid #eee;
+  }
+
+  /* Espaçamento extra entre gráficos */
+  .grafico-espaco {
+    margin-bottom: 40px;
   }
 }

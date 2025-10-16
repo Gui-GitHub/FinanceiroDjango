@@ -5,7 +5,7 @@
 {% block content %}
 <section class="section-padding">
   <div class="container">
-    <h2 class="text-center mb-4">📊 Relatórios de Gastos</h2>
+    <h2 class="text-center mb-4">📊 Relatórios Financeiros</h2>
 
     <!-- Filtros -->
     <div class="card p-3 mb-4 shadow-sm">
@@ -60,14 +60,14 @@
       </div>
       <div class="col-md-4">
         <div class="card p-3 shadow-sm">
-          <h5>Mês com Maior Gasto</h5>
-          <h3 id="mesMax">-</h3>
+          <h5>Total Ganho</h5>
+          <h3 id="totalGanho">R$ 0,00</h3>
         </div>
       </div>
       <div class="col-md-4">
         <div class="card p-3 shadow-sm">
-          <h5>Banco Mais Usado</h5>
-          <h3 id="bancoTop">-</h3>
+          <h5>Saldo Atual</h5>
+          <h3 id="saldoAtual">R$ 0,00</h3>
         </div>
       </div>
     </div>
@@ -79,30 +79,46 @@
     </div>
 
     <!-- Gráficos -->
-    <div class="row">
+    <div class="row mb-4">
+      <div class="col-md-6">
+        <!-- Pizza Gasto x Ganho -->
+        <canvas id="graficoGastoGanho"></canvas>
+      </div>
+
       <div class="col-md-6">
         <canvas id="graficoBanco"></canvas>
       </div>
-      <div class="col-md-6">
-        <canvas id="graficoMesPie"></canvas>
+    </div>   
+
+    <div class="row mb-4">
+      <div class="col-md-12">
+        <!-- Gasto x Ganho por Mês -->
+        <canvas id="graficoComparativoMes"></canvas>
       </div>
     </div>
-    <div class="row">
+
+    <div class="row mb-4">
       <div class="col-md-12">
-        <canvas id="graficoMes"></canvas>
+        <!-- Evolução do saldo -->
+        <canvas id="graficoEvolucaoSaldo"></canvas>
       </div>
     </div>
-    <div class="row">
+
+    <div class="row mb-4">
       <div class="col-md-12">
+        <!-- Gastos por Banco ao longo do tempo -->
         <canvas id="graficoMesBanco"></canvas>
       </div>
     </div>
+
   </div>
 </section>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
+  // Dados carregados do backend
   window.GASTOS_JSON = {{ gastos_json|safe }};
+  window.GANHOS_JSON = {{ ganhos_json|safe }};
 </script>
 <script src="{% static 'js/relatorio.js' %}"></script>
 {% endblock %}
