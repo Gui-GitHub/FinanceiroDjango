@@ -1,6 +1,4 @@
-/* ==========================
-   RELATÓRIOS / VARIÁVEIS DE COR
-========================== */
+/* Variaveis de cor */
 :root {
   --primary-color: #c82333;   /* Vermelho principal */
   --secondary-color: #dc3545; /* Vermelho mais claro */
@@ -8,9 +6,7 @@
   --text-color: #333;
 }
 
-/* ==========================
-   RESET / BASE
-========================== */
+/* Reset */
 body {
   background-color: var(--background-color);
   font-family: 'Poppins', sans-serif;
@@ -34,9 +30,7 @@ img {
   height: 50px;
 }
 
-/* ==========================
-   NAVBAR
-========================== */
+/* NavBar */
 .navbar {
   background-color: var(--primary-color);
 }
@@ -51,9 +45,7 @@ img {
   color: #ffd6d6 !important;
 }
 
-/* ==========================
-   DASHBOARD STATS / CARDS
-========================== */
+/* Dashbord Stats */
 .stat-card {
   background: #fff;
   border-radius: 16px;
@@ -92,9 +84,7 @@ img {
   font-weight: 500;
 }
 
-/* ==========================
-   BOTÕES
-========================== */
+/* Botões */
 .btn-primary {
   background-color: var(--primary-color);
   border-color: var(--primary-color);
@@ -122,9 +112,7 @@ img {
   line-height: 1;
 }
 
-/* ==========================
-   FORMULÁRIOS
-========================== */
+/* Formulários */
 form {
   padding: 2rem;
   border-radius: 10px;
@@ -140,17 +128,13 @@ form .form-control:focus {
   box-shadow: 0 0 0 0.2rem rgba(220,53,69,0.25);
 }
 
-/* ==========================
-   TÍTULOS
-========================== */
+/* Títulos */
 h1, h2, h3, h4, h5, h6 {
   color: var(--primary-color);
   font-weight: 600;
 }
 
-/* ==========================
-   CONTAINERS / CENTRALIZAÇÃO
-========================== */
+/* Containers */
 .container-centered {
   display: flex;
   justify-content: center;
@@ -158,9 +142,7 @@ h1, h2, h3, h4, h5, h6 {
   min-height: 80vh;
 }
 
-/* ==========================
-   ALERTAS
-========================== */
+/* Alertas */
 .alert {
   max-width: 500px;
   margin: 0 auto 20px;
@@ -174,20 +156,7 @@ h1, h2, h3, h4, h5, h6 {
   font-size: 1rem;
 }
 
-/* ==========================
-   FOOTER
-========================== */
-footer {
-  background-color: #f8f9fa;
-  color: #c82333;
-  font-weight: 500;
-  font-size: 0.9rem;
-  border-top: 1px solid #dc3545;
-}
-
-/* ==========================
-   TABELAS (RELATÓRIOS)
-========================== */
+/* Tabelas*/
 table {
   width: 100%;
   border-collapse: collapse;
@@ -207,9 +176,7 @@ table td {
   border-bottom: 1px solid #dee2e6;
 }
 
-/* ==========================
-   BOTÕES ESPECÍFICOS
-========================== */
+/* Botões do Relatório */
 #btnFiltrar {
   background-color: #CC092F;
   border: none;
@@ -235,18 +202,19 @@ table td {
 #btnResetar:hover { background-color: #5a6268; }
 #btnExportar:hover { background-color: #218838; }
 
-/* ==========================
-   SELECT
-========================== */
+/* Select de banco */
 #bancoFiltro {
   height: 40px;
   font-weight: 500;
   border-radius: 6px;
+  width: 200px;       
+  white-space: normal; 
+  overflow: hidden;  
+  text-overflow: ellipsis;
 }
 
-/* ==========================
-   GRÁFICOS / RELATÓRIOS
-========================== */
+
+/* Graficos */
 .card {
   border-radius: 12px;
   transition: transform 0.2s;
@@ -326,9 +294,16 @@ canvas {
   border: 1px solid #eee;
 }
 
-/* ==========================
-   MOBILE
-========================== */
+/* Footer*/
+footer {
+  background-color: #f8f9fa;
+  color: #c82333;
+  font-weight: 500;
+  font-size: 0.9rem;
+  border-top: 1px solid #dc3545;
+}
+
+/* Mobile */
 @media (max-width: 768px) {
   /* Nav */
   .navbar .nav-link {
@@ -419,9 +394,7 @@ canvas {
   .grafico-espaco { margin-bottom: 40px; }
 }
 
-/* ==========================
-   MENU HAMBÚRGUER
-========================== */
+/* Manu Hamburger */
 .custom-toggler {
   border: none;
   background: transparent;
