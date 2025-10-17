@@ -39,7 +39,7 @@
               <form action="{% url 'excluir_gasto' gasto.id %}" method="POST" onsubmit="return confirm('Tem certeza que deseja excluir este gasto?');" class="d-inline">
                 {% csrf_token %}
                 <button type="submit" class="btn btn-danger btn-sm" title="Excluir">
-                  <i class="bi bi-trash"></i> Excluir
+                  <i class="bi bi-trash"></i>
                 </button>
               </form>
             </td>

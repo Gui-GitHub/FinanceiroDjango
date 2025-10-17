@@ -376,23 +376,19 @@ canvas {
 
   /* Rolagem horizontal gráficos */
   .grafico-scroll-x {
-    width: 100%;
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
-    padding-bottom: 8px;
+    width: 100%;
   }
-
   .grafico-scroll-x canvas {
-    min-width: 400px; /* largura mínima para evitar corte */
-    width: 100%; /* garante ajuste quando possível */
-    height: 260px !important;
-    margin: 0 auto;
-    display: block;
+    min-width: 400px;
+    max-width: 100%;
   }
 
-  canvas {
-    border-radius: 10px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  #graficoGastoGanho {
+    max-width: 90%;
+    max-height: 350px;
+    margin-bottom: 56px;
   }
 
   /* Esconde títulos e legendas */
