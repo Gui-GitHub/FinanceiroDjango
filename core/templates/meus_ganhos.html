@@ -1,10 +1,10 @@
 {% extends 'base.html' %}
-{% block title %}Meus Gastos{% endblock %}
+{% block title %}Meus Ganhos{% endblock %}
 
 {% block content %}
 <section class="py-5">
   <div class="container">
-    <h2 class="text-center mb-4">Meus Gastos</h2>
+    <h2 class="text-center mb-4">Meus Ganhos</h2>
 
     {% if messages %}
       {% for message in messages %}
@@ -12,8 +12,8 @@
       {% endfor %}
     {% endif %}
 
-    {% if gastos %}
-      <table class="table table-bordered text-center align-middle">
+    {% if ganhos %}
+      <table class="table table-bordered text-center align-middle shadow-sm">
         <thead class="table-light">
           <tr>
             <th>Descrição</th>
@@ -24,22 +24,22 @@
           </tr>
         </thead>
         <tbody>
-          {% for gasto in gastos %}
+          {% for ganho in ganhos %}
           <tr>
-            <td>{{ gasto.descricao }}</td>
-            <td>{{ gasto.banco }}</td>
-            <td>{{ gasto.mes|date:"m/Y" }}</td>
-            <td class="text-danger">-{{ gasto.valor }}</td>
+            <td>{{ ganho.descricao }}</td>
+            <td>{{ ganho.banco }}</td>
+            <td>{{ ganho.mes|date:"m/Y" }}</td>
+            <td class="text-success fw-semibold">{{ ganho.valor }}</td>
             <td>
-              <a href="{% url 'editar_gasto' gasto.id %}" class="btn btn-warning btn-sm">
-                <i class="bi bi-pencil-square me-1"></i> Editar
+              <a href="{% url 'editar_ganho' ganho.id %}" class="btn btn-warning btn-sm" title="Editar">
+                <i class="bi bi-pencil-square"></i>
               </a>
             </td>
             <td>
-              <form action="{% url 'excluir_gasto' gasto.id %}" method="POST" onsubmit="return confirm('Tem certeza que deseja excluir este gasto?');" class="d-inline">
+              <form action="{% url 'deletar_ganho' ganho.id %}" method="POST" onsubmit="return confirm('Tem certeza que deseja excluir este ganho?');" class="d-inline">
                 {% csrf_token %}
                 <button type="submit" class="btn btn-danger btn-sm" title="Excluir">
-                  <i class="bi bi-trash"></i> Excluir
+                  <i class="bi bi-trash"></i>
                 </button>
               </form>
             </td>
@@ -48,40 +48,36 @@
         </tbody>
       </table>
     {% else %}
-      <p class="text-center">Você ainda não cadastrou nenhum gasto.</p>
+      <p class="text-center text-muted">Você ainda não cadastrou nenhum ganho.</p>
     {% endif %}
 
     <div class="text-center mt-4">
-      <!-- Botão de cadastrar -->
-      <a href="{% url 'cadastro_gastos' %}" class="btn btn-primary me-2">
-        <i class="bi bi-plus-circle me-1"></i> Cadastrar Novo Gasto
+      <a href="{% url 'cadastrar_ganho' %}" class="btn btn-primary me-2">
+        <i class="bi bi-plus-lg me-1"></i> Cadastrar Novo Ganho
       </a>
 
-      <!-- Gerar gastos de exemplo -->
-      <form action="{% url 'gerar_gastos_exemplo' %}" method="post" class="d-inline">
+      <form action="{% url 'gerar_ganhos_exemplo' %}" method="post" class="d-inline">
         {% csrf_token %}
         <button type="submit" class="btn btn-success me-2">
-          <i class="bi bi-stars me-1"></i> Gerar Gastos Exemplo
+          <i class="bi bi-lightning-charge-fill me-1"></i> Gerar Ganhos Exemplo
         </button>
       </form>
 
-      <!-- Ir para Relatório -->
-      <a href="{% url 'relatorio' %}" class="btn btn-info text-white">
-        <i class="bi bi-graph-up me-1"></i> Ir para Relatório
+      <a href="{% url 'relatorio' %}" class="btn btn-info me-2">
+        <i class="bi bi-bar-chart-line me-1"></i> Ver Relatório
       </a>
     </div>
 
     <div class="text-center mt-4">
-      <!-- Excluir todos -->
-      <form action="{% url 'excluir_todos_gastos' %}" method="post" class="d-inline" onsubmit="return confirm('⚠️ Tem certeza que deseja excluir TODOS os gastos?');">
+      <form action="{% url 'excluir_todos_ganhos' %}" method="post" class="d-inline" onsubmit="return confirm('⚠️ Tem certeza que deseja excluir TODOS os ganhos?');">
         {% csrf_token %}
         <button type="submit" class="btn btn-outline-danger">
-          <i class="bi bi-trash3 me-1"></i> Excluir Todos os Gastos
+          <i class="bi bi-trash3-fill me-1"></i> Excluir Todos os Ganhos
         </button>
       </form>
     </div>
 
-    <p class="mt-3 text-center">
+    <p class="mt-4 text-center">
       <a href="{% url 'index' %}" class="text-decoration-none">
         <i class="bi bi-arrow-left-circle me-1"></i> Voltar à tela inicial
       </a>
