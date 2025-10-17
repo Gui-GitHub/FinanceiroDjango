@@ -14,7 +14,7 @@ function setupTogglePassword(inputId, iconId) {
 }
 
 document.addEventListener('DOMContentLoaded', function() {
-  setupTogglePassword("current_password", "toggleCurrentPassword");
+  setupTogglePassword("password", "togglePassword");
   setupTogglePassword("new_password", "toggleNewPassword");
   setupTogglePassword("confirm_password", "toggleConfirmPassword");
 });
