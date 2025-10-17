@@ -1,10 +1,9 @@
-
-from django.contrib.auth.password_validation import validate_password
 from datetime import datetime
 from decimal import Decimal
 from django import forms
 
 from .models import Pessoa, GastoMensal, GanhoMensal
+from .validators import Validator
 
 # Formulário de Pessoa
 class PessoaForm(forms.ModelForm):
@@ -44,6 +43,7 @@ class PessoaForm(forms.ModelForm):
         }
 
 # Formulário para a senha
+
 class SenhaForm(forms.Form):
     password = forms.CharField(
         label="Senha Atual",
@@ -53,14 +53,20 @@ class SenhaForm(forms.Form):
     new_password = forms.CharField(
         label="Nova Senha",
         widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Digite a nova senha'}),
-        required=True,
-        validators=[validate_password]
+        required=True
     )
     confirm_password = forms.CharField(
         label="Confirmar Nova Senha",
         widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Confirme a nova senha'}),
         required=True
     )
+
+    def clean_new_password(self):
+        senha = self.cleaned_data.get('new_password')
+        msg = Validator.senha(senha)
+        if msg:
+            raise forms.ValidationError(msg)
+        return senha
 
     def clean(self):
         cleaned_data = super().clean()

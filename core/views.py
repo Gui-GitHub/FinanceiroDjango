@@ -126,19 +126,20 @@ class EditarSenhaView(LoginRequiredMixin, FormView):
 
     def form_valid(self, form):
         user = self.request.user
-        current_password = form.cleaned_data.get('password')
+        current_password = form.cleaned_data.get('password')  # corresponde ao HTML
         new_password = form.cleaned_data.get('new_password')
 
+        # Verifica senha atual
         if not user.check_password(current_password):
             form.add_error('password', 'Senha atual incorreta.')
             return self.form_invalid(form)
 
+        # Altera senha
         user.set_password(new_password)
         user.save()
 
-        # Mantém o usuário logado
+        # Mantém logado
         update_session_auth_hash(self.request, user)
-
         messages.success(self.request, "Senha alterada com sucesso!")
         return super().form_valid(form)
 
