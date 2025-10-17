@@ -1,3 +1,5 @@
+
+from django.contrib.auth.password_validation import validate_password
 from datetime import datetime
 from decimal import Decimal
 from django import forms
@@ -40,6 +42,34 @@ class PessoaForm(forms.ModelForm):
         input_formats = {
             'data_nascimento': ['%Y-%m-%d', '%d/%m/%Y']
         }
+
+# Formulário para a senha
+class SenhaForm(forms.Form):
+    current_password = forms.CharField(
+        label="Senha Atual",
+        widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Digite sua senha atual'}),
+        required=True
+    )
+    new_password = forms.CharField(
+        label="Nova Senha",
+        widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Digite a nova senha'}),
+        required=True,
+        validators=[validate_password]  # Senha do Django
+    )
+    confirm_password = forms.CharField(
+        label="Confirmar Nova Senha",
+        widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Confirme a nova senha'}),
+        required=True
+    )
+
+    def clean(self):
+        cleaned_data = super().clean()
+        new_password = cleaned_data.get("new_password")
+        confirm_password = cleaned_data.get("confirm_password")
+
+        if new_password and confirm_password and new_password != confirm_password:
+            raise forms.ValidationError("As senhas digitadas não coincidem.")
+        return cleaned_data
 
 # Formulário de Gastos Mensais
 class GastoForm(forms.ModelForm):

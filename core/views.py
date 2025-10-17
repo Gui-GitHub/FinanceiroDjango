@@ -1,6 +1,7 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, get_object_or_404
+from django.contrib.auth import update_session_auth_hash
 from django.views.generic import FormView, TemplateView
 from django.contrib.auth import authenticate, login
 from django.views.generic.edit import UpdateView
@@ -15,7 +16,7 @@ from datetime import datetime
 import random
 import json
 
-from .forms import GastoForm, GanhoForm, PessoaForm
+from .forms import GastoForm, GanhoForm, PessoaForm, SenhaForm
 from .models import Pessoa, GastoMensal, GanhoMensal
 from .validators import Validator
 
@@ -115,6 +116,30 @@ class EditarPerfilView(LoginRequiredMixin, UpdateView):
 
     def form_valid(self, form):
         messages.success(self.request, "Seus dados foram atualizados com sucesso!")
+        return super().form_valid(form)
+    
+# Tela para editar a senha do usuário
+class EditarSenhaView(LoginRequiredMixin, FormView):
+    template_name = 'editar_senha.html'
+    form_class = SenhaForm
+    success_url = reverse_lazy('editar_senha')
+
+    def form_valid(self, form):
+        user = self.request.user
+        current_password = form.cleaned_data.get('current_password')
+        new_password = form.cleaned_data.get('new_password')
+
+        if not user.check_password(current_password):
+            form.add_error('current_password', 'Senha atual incorreta.')
+            return self.form_invalid(form)
+
+        user.set_password(new_password)
+        user.save()
+
+        # Mantém o usuário logado após trocar a senha
+        update_session_auth_hash(self.request, user)
+
+        messages.success(self.request, "Senha alterada com sucesso!")
         return super().form_valid(form)
 
 # Cadastrar seus gastos

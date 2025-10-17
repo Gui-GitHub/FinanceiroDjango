@@ -12,6 +12,7 @@ urlpatterns = [
 
     path('cadastro-usuario/', views.cadastro_usuario, name='cadastro_usuario'),
     path('editar-perfil/', views.EditarPerfilView.as_view(), name='editar_perfil'),
+    path('editar-senha/', views.EditarSenhaView.as_view(), name='editar_senha'),
 
     path('meus-gastos/', views.GastoListView.as_view(), name='meus_gastos'),
     path('cadastro-gasto/', views.GastoCreateView.as_view(), name='cadastro_gastos'),
@@ -26,5 +27,4 @@ urlpatterns = [
     path('meus-ganhos/excluir/<int:pk>', views.GanhoDeleteView.as_view(), name='deletar_ganho'),
     path('gerar_ganhos/', views.gerar_ganhos_exemplo, name='gerar_ganhos_exemplo'),
     path('excluir_ganhos/', views.excluir_todos_ganhos, name='excluir_todos_ganhos'),
-
 ]
