@@ -1,7 +1,7 @@
 <h1 align="center">FinanceiroDjango - Sistema de Gestão Financeira</h1>
 
 <p align="center">
-  <img width="900" height="449" alt="Imagem Index" src="https://github.com/user-attachments/assets/12c46760-b1a5-4873-bdbb-b51aa6696086"/>
+  <img width="1584" height="780" alt="image" src="https://github.com/user-attachments/assets/e6c8ec51-5960-4035-b8db-a167c19d6b1f" />
 </p>
 
 ![Python](https://img.shields.io/badge/python-3.10%2B-blue)
@@ -151,7 +151,7 @@ Acesse em `http://127.0.0.1:8000/`
 
 <table>
   <tr>
-    <td width="50%"><img src="https://github.com/user-attachments/assets/b589b6b1-34ca-4b01-8a4d-720d2df4eba7" width="100%"/></td>
+    <td width="50%"><img src="https://github.com/user-attachments/assets/c1ab6a45-9a4a-474c-ae19-5f74ea1df253" width="100%"/></td>
     <td width="50%"><img src="https://github.com/user-attachments/assets/863e690c-2201-44b8-b046-2270cf8381bf" width="100%"/></td>
   </tr>
   <tr>
