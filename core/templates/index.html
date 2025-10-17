@@ -11,9 +11,10 @@
       NÃO insira dados reais. Use apenas informações fictícias para testar.
     </div>
 
-    <h1 class="display-5 mb-4">Bem-vindo ao Projeto Financeiro Django!</h1>
+    <h1 class="display-5 mb-4">Bem-vindo ao Projeto Financeiro!</h1>
     <p class="lead mb-5">
-      Cadastre-se, registre seus gastos e visualize relatórios interativos de forma simples e intuitiva.
+      Cadastre-se, registre seus ganhos, gastos e visualize relatórios interativos de forma simples e intuitiva.
+      (Feito em Django)
     </p>
 
     <div class="d-flex justify-content-center flex-wrap">
@@ -25,11 +26,15 @@
     <hr class="my-5">
 
     <div class="row text-center">
-      <div class="col-md-6">
+      <div class="col-md-4">
         <h3>{{ total_pessoas }}</h3>
         <p>Pessoas cadastradas</p>
       </div>
-      <div class="col-md-6">
+      <div class="col-md-4">
+        <h3>{{ total_ganhos }}</h3>
+        <p>Ganhos registrados</p>
+      </div>
+      <div class="col-md-4">
         <h3>{{ total_gastos }}</h3>
         <p>Gastos registrados</p>
       </div>

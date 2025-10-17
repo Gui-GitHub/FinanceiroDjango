@@ -10,7 +10,6 @@ from django.utils.timezone import make_aware
 from django.contrib.auth.models import User
 from django.contrib.auth import logout
 from django.urls import reverse_lazy
-from django.http import JsonResponse
 from django.contrib import messages
 from datetime import datetime
 import random
@@ -29,6 +28,7 @@ class IndexView(TemplateView):
         # informações resumidas
         context['total_pessoas'] = Pessoa.objects.count()
         context['total_gastos'] = GastoMensal.objects.count()
+        context['total_ganhos'] = GanhoMensal.objects.count()
         return context
 
 # View de login

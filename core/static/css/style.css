@@ -1,4 +1,6 @@
-/* Variáveis de cor */
+/* ==========================
+   RELATÓRIOS / VARIÁVEIS DE COR
+========================== */
 :root {
   --primary-color: #c82333;   /* Vermelho principal */
   --secondary-color: #dc3545; /* Vermelho mais claro */
@@ -6,7 +8,9 @@
   --text-color: #333;
 }
 
-/* Reset */
+/* ==========================
+   RESET / BASE
+========================== */
 body {
   background-color: var(--background-color);
   font-family: 'Poppins', sans-serif;
@@ -15,7 +19,24 @@ body {
   padding: 0;
 }
 
-/* Navbar */
+a {
+  color: var(--primary-color);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+a:hover {
+  color: var(--secondary-color);
+  text-decoration: underline;
+}
+
+img {
+  height: 50px;
+}
+
+/* ==========================
+   NAVBAR
+========================== */
 .navbar {
   background-color: var(--primary-color);
 }
@@ -30,7 +51,9 @@ body {
   color: #ffd6d6 !important;
 }
 
-/* Botões */
+/* ==========================
+   BOTÕES
+========================== */
 .btn-primary {
   background-color: var(--primary-color);
   border-color: var(--primary-color);
@@ -58,7 +81,9 @@ body {
   line-height: 1;
 }
 
-/* Formulários */
+/* ==========================
+   FORMULÁRIOS
+========================== */
 form {
   padding: 2rem;
   border-radius: 10px;
@@ -74,13 +99,17 @@ form .form-control:focus {
   box-shadow: 0 0 0 0.2rem rgba(220,53,69,0.25);
 }
 
-/* Títulos */
+/* ==========================
+   TÍTULOS
+========================== */
 h1, h2, h3, h4, h5, h6 {
   color: var(--primary-color);
   font-weight: 600;
 }
 
-/* Containers e centralização */
+/* ==========================
+   CONTAINERS / CENTRALIZAÇÃO
+========================== */
 .container-centered {
   display: flex;
   justify-content: center;
@@ -88,7 +117,9 @@ h1, h2, h3, h4, h5, h6 {
   min-height: 80vh;
 }
 
-/* Alertas */
+/* ==========================
+   ALERTAS
+========================== */
 .alert {
   max-width: 500px;
   margin: 0 auto 20px;
@@ -96,7 +127,26 @@ h1, h2, h3, h4, h5, h6 {
   box-shadow: 0 2px 6px rgba(0,0,0,0.1);
 }
 
-/* Tabelas (para relatórios) */
+.alert-warning {
+  border-radius: 8px;
+  font-weight: 500;
+  font-size: 1rem;
+}
+
+/* ==========================
+   FOOTER
+========================== */
+footer {
+  background-color: #f8f9fa;
+  color: #c82333;
+  font-weight: 500;
+  font-size: 0.9rem;
+  border-top: 1px solid #dc3545;
+}
+
+/* ==========================
+   TABELAS (RELATÓRIOS)
+========================== */
 table {
   width: 100%;
   border-collapse: collapse;
@@ -116,55 +166,58 @@ table td {
   border-bottom: 1px solid #dee2e6;
 }
 
-/* Alerta fixo centralizado */
-.alert-warning {
-  border-radius: 8px;
+/* ==========================
+   BOTÕES ESPECÍFICOS
+========================== */
+#btnFiltrar {
+  background-color: #CC092F;
+  border: none;
+  color: #fff;
+  font-weight: bold;
+}
+
+#btnResetar {
+  background-color: #6c757d;
+  border: none;
+  color: #fff;
+  font-weight: bold;
+}
+
+#btnExportar {
+  background-color: #28a745;
+  border: none;
+  color: #fff;
+  font-weight: bold;
+}
+
+#btnFiltrar:hover { background-color: #a50d25; }
+#btnResetar:hover { background-color: #5a6268; }
+#btnExportar:hover { background-color: #218838; }
+
+/* ==========================
+   SELECT
+========================== */
+#bancoFiltro {
+  height: 40px;
   font-weight: 500;
-  font-size: 1rem;
+  border-radius: 6px;
 }
 
-/* Footer */
-footer {
-  background-color: #f8f9fa;
-  color: #c82333; /* Vermelho para identidade */
-  font-weight: 500;
-  font-size: 0.9rem;
-  border-top: 1px solid #dc3545;
-}
-
-/* Links */
-a {
-  color: var(--primary-color);
-  text-decoration: none;
-  transition: color 0.2s;
-}
-
-a:hover {
-  color: var(--secondary-color);
-  text-decoration: underline;
-}
-
-/* imagem */
-img {
-  height: 50px;
-}
-
-/* Gráficos */
+/* ==========================
+   GRÁFICOS / RELATÓRIOS
+========================== */
 .card {
   border-radius: 12px;
   transition: transform 0.2s;
 }
 
-.card:hover {
-  transform: translateY(-4px);
-}
+.card:hover { transform: translateY(-4px); }
 
 .card h5 {
   font-weight: 500;
   color: #333;
 }
 
-/* Gráficos de relatórios */
 #graficoMes,
 #graficoMesBanco {
   min-height: 400px;
@@ -173,13 +226,6 @@ img {
   width: 100% !important;
   display: block;
   margin: 0 auto;
-}
-
-#graficoGastoGanho {
-  height: 400px; /* altura do gráfico */
-  width: 400px;  /* largura do gráfico */
-  margin: 0 auto; /* centraliza */
-  margin-bottom: 48px; /* aumenta o espaço abaixo do gráfico de pizza */
 }
 
 #graficoMes canvas,
@@ -192,64 +238,17 @@ img {
   margin: 0 auto;
 }
 
+#graficoGastoGanho {
+  height: 400px;
+  width: 400px;
+  margin: 0 auto 48px auto;
+}
+
 #totalGasto { color: #4e73df; }
 #mesMax { color: #1cc88a; }
 #bancoTop { color: #e74a3b; }
 
-/* Botões */
-#btnFiltrar {
-    background-color: #CC092F; /* vermelho Bradesco */
-    border: none;
-    color: #fff;
-    font-weight: bold;
-}
-
-#btnResetar {
-    background-color: #6c757d; /* cinza */
-    border: none;
-    color: #fff;
-    font-weight: bold;
-}
-
-#btnExportar {
-    background-color: #28a745; /* verde */
-    border: none;
-    color: #fff;
-    font-weight: bold;
-}
-
-/* Select */
-#bancoFiltro {
-    height: 40px;
-    font-weight: 500;
-    border-radius: 6px;
-}
-
-/* Ajuste hover */
-#btnFiltrar:hover { background-color: #a50d25; }
-#btnResetar:hover { background-color: #5a6268; }
-#btnExportar:hover { background-color: #218838; }
-
-/* Visual aprimorado para gráficos (desktop e mobile) */
-canvas {
-  background: #fff;
-  border-radius: 12px;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.07);
-  padding: 12px;
-  transition: box-shadow 0.2s;
-  /* Adiciona borda e sombra em todos tamanhos */
-  border: 1px solid #eee;
-}
-
-/* Espaçamento extra para o gráfico de pizza */
-#graficoGastoGanho {
-  height: 400px;
-  width: 400px;
-  margin: 0 auto;
-  margin-bottom: 48px; /* aumenta o espaço abaixo do gráfico de pizza */
-}
-
-/* Visual aprimorado para gráficos */
+/* Containers para gráficos */
 .grafico-container {
   background: #fff;
   border-radius: 16px;
@@ -272,12 +271,23 @@ canvas {
   letter-spacing: 0.5px;
 }
 
-/* Espaçamento entre gráficos */
 .grafico-espaco {
   margin-bottom: 32px;
 }
 
-/* Mobile */
+/* Canvas */
+canvas {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+  padding: 12px;
+  transition: box-shadow 0.2s;
+  border: 1px solid #eee;
+}
+
+/* ==========================
+   MOBILE
+========================== */
 @media (max-width: 768px) {
   /* Nav */
   .navbar .nav-link {
@@ -287,27 +297,10 @@ canvas {
     font-size: 1.1rem;
     padding: 0.75rem 1rem;
   }
-  .navbar .nav-item {
-    margin-bottom: 8px;
-  }
-  .navbar-collapse {
-    background: var(--primary-color);
-    padding: 1rem 0;
-  }
+  .navbar .nav-item { margin-bottom: 8px; }
 
-  /* Hamburger menu */
-  .navbar-toggler {
-    border: none;
-    background: transparent;
-    font-size: 2rem;
-    color: #fff;
-  }
-  .navbar-toggler:focus {
-    outline: none;
-    box-shadow: none;
-  }
   .navbar-collapse {
-    background: var(--primary-color);
+    background-color: var(--primary-color);
     padding: 1rem 0;
     width: 100%;
   }
@@ -322,19 +315,13 @@ canvas {
     border-bottom: 1px solid #dc3545;
   }
 
-  /* Relatórios: espaçamento maior entre filtros */
+  /* Relatórios: espaçamento filtros */
   #filtroForm .col-md-3,
-  #filtroForm .col-md-2 {
-    margin-bottom: 16px;
-  }
-  #filtroForm {
-    row-gap: 0.5rem;
-  }
-  #btnFiltrar, #btnResetar {
-    margin-bottom: 8px;
-  }
+  #filtroForm .col-md-2 { margin-bottom: 16px; }
+  #filtroForm { row-gap: 0.5rem; }
+  #btnFiltrar, #btnResetar { margin-bottom: 8px; }
 
-  /* Rolagem horizontal para gráficos */
+  /* Rolagem horizontal gráficos */
   .grafico-scroll-x {
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
@@ -345,37 +332,27 @@ canvas {
     max-width: 100%;
   }
 
-  /* Relatórios: gráficos maiores no mobile */
   #graficoGastoGanho {
     max-width: 90%;
     max-height: 350px;
-    margin-bottom: 56px; /* ainda maior no mobile */
+    margin-bottom: 56px;
   }
 
-  /* Esconde títulos dos gráficos no mobile */
-  .grafico-titulo {
-    display: none !important;
-  }
+  /* Esconde títulos e legendas */
+  .grafico-titulo,
+  .hide-legend-mobile { display: none !important; }
 
-  /* Esconde legendas dos gráficos no mobile */
-  .hide-legend-mobile {
-    display: none !important;
-  }
-
-  /* Botões meus gastos */
+  /* Botões */
   .btn-primary,
   .btn-success,
-  .btn-outline-danger{
-    margin: 5px 0px 5px 0px;
-  }
+  .btn-outline-danger { margin: 5px 0; }
 
-  /* Gráficos: mais espaço entre eles no mobile */
+  /* Containers gráficos */
   .grafico-container {
     padding: 12px 6px;
     margin-bottom: 40px;
   }
 
-  /* Canvas: ocupa quase toda largura, altura reduzida, borda e sombra mantidas */
   .grafico-container canvas,
   canvas {
     max-width: 98vw;
@@ -383,13 +360,59 @@ canvas {
     min-height: 180px !important;
     margin: 0 auto;
     padding: 6px;
-    border-radius: 12px;
-    box-shadow: 0 2px 12px rgba(0,0,0,0.07);
-    border: 1px solid #eee;
   }
 
-  /* Espaçamento extra entre gráficos */
-  .grafico-espaco {
-    margin-bottom: 40px;
+  .grafico-espaco { margin-bottom: 40px; }
+}
+
+/* ==========================
+   MENU HAMBÚRGUER
+========================== */
+.custom-toggler {
+  border: none;
+  background: transparent;
+  outline: none !important;
+}
+
+.toggler-icon {
+  display: block;
+  width: 28px;
+  height: 3px;
+  background-color: #fff;
+  border-radius: 2px;
+  margin: 6px auto;
+  transition: all 0.3s ease-in-out;
+}
+
+.custom-toggler[aria-expanded="true"] .top-bar {
+  transform: rotate(45deg);
+  position: relative;
+  top: 8px;
+}
+
+.custom-toggler[aria-expanded="true"] .middle-bar { opacity: 0; }
+
+.custom-toggler[aria-expanded="true"] .bottom-bar {
+  transform: rotate(-45deg);
+  position: relative;
+  top: -8px;
+}
+
+/* Fundo do menu mobile */
+@media (max-width: 768px) {
+  .navbar-collapse {
+    background-color: var(--primary-color);
+    padding: 1rem 0;
+  }
+
+  .navbar-nav .nav-link {
+    color: #fff !important;
+    padding: 0.75rem 1.5rem;
+    text-align: center;
+    transition: background-color 0.2s;
+  }
+
+  .navbar-nav .nav-link:hover {
+    background-color: rgba(255, 255, 255, 0.1);
   }
 }

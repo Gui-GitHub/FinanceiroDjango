@@ -29,7 +29,7 @@
             <td>{{ ganho.descricao }}</td>
             <td>{{ ganho.banco }}</td>
             <td>{{ ganho.mes|date:"m/Y" }}</td>
-            <td>{{ ganho.valor }}</td>
+            <td class="text-success">{{ ganho.valor }}</td>
             <td>
               <a href="{% url 'editar_ganho' ganho.id %}" class="btn btn-warning btn-sm">Editar</a>
             </td>
