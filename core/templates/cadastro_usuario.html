@@ -27,10 +27,11 @@
           </div>
 
           <div class="form-group position-relative">
-            <label for="password">Senha</label>
-            <input type="password" id="password" name="password" class="form-control" placeholder="Digite uma senha" required>
-            <span id="togglePassword" class="bi bi-eye toggle-password"
-              style="position:absolute; right:10px; top:38px; cursor:pointer; font-size:1.2rem;"></span>
+            <label for="current_password">Senha</label>
+            <input type="password" id="current_password" name="current_password" class="form-control"
+                   placeholder="Digite uma senha" required autocomplete="current-password">
+            <span id="toggleCurrentPassword" class="bi bi-eye toggle-password"
+                  style="position:absolute; right:10px; top:38px; cursor:pointer; font-size:1.2rem;"></span>
             <small class="form-text text-muted">
               A senha deve conter:
               <ul style="margin:0; padding-left:18px;">
@@ -40,7 +41,6 @@
               </ul>
             </small>
           </div>
-
           <hr>
 
           <div class="form-group">
