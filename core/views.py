@@ -81,7 +81,7 @@ def cadastro_usuario(request):
                 user=user, cpf=cpf, nome=nome, sexo=sexo, data_nascimento=data_nascimento
             )
             login(request, user)
-            return redirect('cadastro_gastos')
+            return redirect('index')
 
         # Erro, renderiza novamente mantendo os dados preenchidos
         return render(request, 'cadastro_usuario.html', {'erro': erro, 'dados': dados})
