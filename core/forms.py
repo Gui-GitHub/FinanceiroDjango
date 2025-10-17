@@ -43,7 +43,6 @@ class PessoaForm(forms.ModelForm):
         }
 
 # Formulário para a senha
-
 class SenhaForm(forms.Form):
     password = forms.CharField(
         label="Senha Atual",

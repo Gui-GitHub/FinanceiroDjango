@@ -1,19 +1,45 @@
 document.addEventListener("DOMContentLoaded", () => {
+
+  // Cores de cada banco
+  const bancoColors = {
+    "Itau": "#FF7900",               // laranja Itau
+    "Bradesco": "#DC143C",           // vermelho Bradesco
+    "Santander": "#FF0000",          // vermelho Santander
+    "Nubank": "#8A05BE",             // roxo Nubank
+    "Banco do Brasil": "#FFCC00",    // amarelo BB
+    "Caixa": "#003DA5",              // azul Caixa
+    "Banco Inter": "#00AEEF",        // azul Inter
+    "Banco Original": "#FF6600",     // laranja Original
+    "C6 Bank": "#00B2A9",            // turquesa C6
+    "Next": "#6A0DAD",               // roxo Next
+    "Pan": "#003DA5",                 // azul Pan
+    "Sicredi": "#78BE20",            // verde Sicredi
+    "Sicoob": "#00A550",             // verde Sicoob
+    "Banrisul": "#00285B",           // azul escuro Banrisul
+    "XP": "#FF6600",                  // laranja XP
+    "Outro": "#808080"               // cinza Outros
+  };
+
+  // Resgatando dados da pessoa via json
   const gastos = window.GASTOS_JSON || [];
   const ganhos = window.GANHOS_JSON || [];
 
+  // Declarando variáveis dos cards
   const totalGastoEl = document.getElementById("totalGasto");
   const totalGanhoEl = document.getElementById("totalGanho");
   const saldoAtualEl = document.getElementById("saldoAtual");
 
+  // Declarando variáveis dos botões
   const btnFiltrar = document.getElementById("btnFiltrar");
   const btnResetar = document.getElementById("btnResetar");
   const btnExportar = document.getElementById("btnExportar");
 
+  // Declarando variáveis dos Filtros
   const dataInicio = document.getElementById("dataInicio");
   const dataFim = document.getElementById("dataFim");
   const bancoFiltro = document.getElementById("bancoFiltro");
 
+  // Variável do estilo
   const loading = document.getElementById("loading");
 
   let chartInstances = [];
@@ -85,10 +111,12 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // ======== GRÁFICOS ===========
+  // Gráfico de Gastos por banco
   function criarGraficoBanco(gastosFiltrados) {
     const porBanco = groupBy(gastosFiltrados, (g) => g.banco || "Outro");
     const labels = Object.keys(porBanco);
     const valores = labels.map((b) => porBanco[b].reduce((sum, g) => sum + parseFloat(g.valor), 0));
+    const colors = labels.map((b) => bancoColors[b] || "#808080");
 
     const ctx = document.getElementById("graficoBanco").getContext("2d");
     chartInstances.push(
@@ -96,23 +124,20 @@ document.addEventListener("DOMContentLoaded", () => {
         type: "bar",
         data: {
           labels,
-          datasets: [{ label: "Total Gasto por Banco", data: valores }],
+          datasets: [{ label: "Total Gasto por Banco", data: valores, backgroundColor: colors }],
         },
         options: {
           responsive: true,
           plugins: {
-            legend: { display: window.innerWidth > 768 }, // legenda só no desktop
-            title: { 
-              display: true, // sempre mostra título
-              text: "Gastos por Banco", 
-              font: { size: 18 } 
-            },
+            legend: { display: window.innerWidth > 768 },
+            title: { display: true, text: "Gastos por Banco", font: { size: 18 } },
           },
         },
       })
     );
   }
 
+  // Grafico de Gatos x Ganhos Pizza
   function criarGraficoGastoGanho(totalGasto, totalGanho) {
     const ctx = document.getElementById("graficoGastoGanho").getContext("2d");
     chartInstances.push(
@@ -141,6 +166,7 @@ document.addEventListener("DOMContentLoaded", () => {
     );
   }
 
+  // Graficos comparativo mensal gasto x ganhos
   function criarGraficoComparativoMes(gastosFiltrados, ganhosFiltrados) {
     const gastosMes = groupBy(gastosFiltrados, (g) => getMonthKey(g.data));
     const ganhosMes = groupBy(ganhosFiltrados, (g) => getMonthKey(g.data));
@@ -177,6 +203,7 @@ document.addEventListener("DOMContentLoaded", () => {
     );
   }
 
+  // Gráfico de evolução de saldo, do tipo linha do tempo
   function criarGraficoEvolucaoSaldo(gastosFiltrados, ganhosFiltrados) {
     const todos = [...gastosFiltrados.map((g) => ({ ...g, tipo: "gasto" })), ...ganhosFiltrados.map((g) => ({ ...g, tipo: "ganho" }))].sort((a, b) => new Date(a.data) - new Date(b.data));
 
@@ -213,6 +240,7 @@ document.addEventListener("DOMContentLoaded", () => {
     );
   }
 
+  // Grafico por banco e por mÊs, linha do tempo
   function criarGraficoMesBanco(gastosFiltrados) {
     const bancos = Array.from(new Set(gastosFiltrados.map((g) => g.banco || "Outro")));
     const meses = Array.from(new Set(gastosFiltrados.map((g) => getMonthKey(g.data)))).sort();
@@ -222,7 +250,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const filtrado = gastosFiltrados.filter((g) => g.banco === banco && getMonthKey(g.data) === m);
         return filtrado.reduce((sum, g) => sum + parseFloat(g.valor), 0);
       });
-      return { label: banco, data };
+      return { label: banco, data, borderColor: bancoColors[banco] || "#808080", backgroundColor: bancoColors[banco] || "#808080", fill: false, tension: 0.3 };
     });
 
     const ctx = document.getElementById("graficoMesBanco").getContext("2d");
@@ -233,15 +261,8 @@ document.addEventListener("DOMContentLoaded", () => {
         options: {
           responsive: true,
           plugins: {
-            legend: {
-              display: window.innerWidth > 768, // legenda só no desktop
-              position: "bottom"
-            },
-            title: { 
-              display: true, // sempre mostra título
-              text: "Gastos por Banco ao Longo do Mês", 
-              font: { size: 18 } 
-            },
+            legend: { display: window.innerWidth > 768, position: "bottom" },
+            title: { display: true, text: "Gastos por Banco ao Longo do Mês", font: { size: 18 } },
           },
         },
       })

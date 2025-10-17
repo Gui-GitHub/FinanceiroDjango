@@ -1,5 +1,5 @@
 from django.test import TestCase
-from core.forms import PessoaForm, GastoForm, GanhoForm
+from core.forms import PessoaForm, GastoForm, GanhoForm, SenhaForm
 
 # Teste formulário de usuário
 class PessoaFormTest(TestCase):
@@ -72,3 +72,34 @@ class GanhoFormTest(TestCase):
         }
         form = GanhoForm(data=data)
         self.assertFalse(form.is_valid())
+
+# Teste formulário de senha
+class SenhaFormTest(TestCase):
+    def test_valid_passwords(self):
+        data = {
+            'password': 'OldPass1!',
+            'new_password': 'Senha@1234',
+            'confirm_password': 'Senha@1234'
+        }
+        form = SenhaForm(data=data)
+        self.assertTrue(form.is_valid())
+
+    def test_mismatch_passwords(self):
+        data = {
+            'password': 'OldPass1!',
+            'new_password': 'Senha@1234',
+            'confirm_password': 'Outra@1234'
+        }
+        form = SenhaForm(data=data)
+        self.assertFalse(form.is_valid())
+        self.assertIn('__all__', form.errors)  # erro de validação global por confirmação
+
+    def test_invalid_new_password(self):
+        data = {
+            'password': 'OldPass1!',
+            'new_password': '123',
+            'confirm_password': '123'
+        }
+        form = SenhaForm(data=data)
+        self.assertFalse(form.is_valid())
+        self.assertIn('new_password', form.errors)  # erro específico do campo new_password

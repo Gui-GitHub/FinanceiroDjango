@@ -30,10 +30,21 @@ class Pessoa(Base):
 class GastoMensal(Base):
     # Lista de bancos
     BANCO_CHOICES = [
-        ('Itau', 'Itaú'),
+        ('Banco do Brasil', 'Banco do Brasil'),
+        ('Banco Inter', 'Banco Inter'),
+        ('Banco Original', 'Banco Original'),
+        ('Banrisul', 'Banrisul'),
         ('Bradesco', 'Bradesco'),
-        ('Santander', 'Santander'),
+        ('Caixa', 'Caixa Econômica Federal'),
+        ('C6 Bank', 'C6 Bank'),
+        ('Itau', 'Itaú'),
         ('Nubank', 'Nubank'),
+        ('Next', 'Next'),
+        ('Pan', 'Banco Pan'),
+        ('Santander', 'Santander'),
+        ('Sicredi', 'Sicredi'),
+        ('Sicoob', 'Sicoob'),
+        ('XP', 'XP Investimentos'),
         ('Outro', 'Outro'),
     ]
 
@@ -54,14 +65,27 @@ class GastoMensal(Base):
     
 # Ganhos Mensais
 class GanhoMensal(Base):
+    # Lista de bancos
     BANCO_CHOICES = [
-        ('Itau', 'Itaú'),
+        ('Banco do Brasil', 'Banco do Brasil'),
+        ('Banco Inter', 'Banco Inter'),
+        ('Banco Original', 'Banco Original'),
+        ('Banrisul', 'Banrisul'),
         ('Bradesco', 'Bradesco'),
-        ('Santander', 'Santander'),
+        ('Caixa', 'Caixa Econômica Federal'),
+        ('C6 Bank', 'C6 Bank'),
+        ('Itau', 'Itaú'),
         ('Nubank', 'Nubank'),
+        ('Next', 'Next'),
+        ('Pan', 'Banco Pan'),
+        ('Santander', 'Santander'),
+        ('Sicredi', 'Sicredi'),
+        ('Sicoob', 'Sicoob'),
+        ('XP', 'XP Investimentos'),
         ('Outro', 'Outro'),
     ]
 
+    # Campos
     pessoa = models.ForeignKey(Pessoa, on_delete=models.CASCADE, related_name='ganhos')
     banco = models.CharField('Banco', max_length=50, choices=BANCO_CHOICES)
     descricao = models.CharField('Descrição', max_length=200)

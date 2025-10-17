@@ -126,7 +126,7 @@ class EditarSenhaView(LoginRequiredMixin, FormView):
 
     def form_valid(self, form):
         user = self.request.user
-        current_password = form.cleaned_data.get('password')  # corresponde ao HTML
+        current_password = form.cleaned_data.get('password')
         new_password = form.cleaned_data.get('new_password')
 
         # Verifica senha atual
@@ -166,7 +166,6 @@ class GastoListView(LoginRequiredMixin, ListView):
     def get_queryset(self):
         return GastoMensal.objects.filter(pessoa=self.request.user.pessoa).order_by('-mes')
 
-
 # Editar gastos existente
 class GastoUpdateView(LoginRequiredMixin, UpdateView):
     model = GastoMensal
@@ -195,7 +194,24 @@ class GastoDeleteView(LoginRequiredMixin, View):
 def gerar_gastos_exemplo(request):
     pessoa = request.user.pessoa
 
-    bancos = ['Itau', 'Bradesco', 'Santander', 'Nubank', 'Outro']
+    bancos = [
+        'Banco do Brasil',
+        'Banco Inter',
+        'Banco Original',
+        'Banrisul',
+        'Bradesco',
+        'Caixa',
+        'C6 Bank',
+        'Itau',
+        'Nubank',
+        'Next',
+        'Pan',
+        'Santander',
+        'Sicredi',
+        'Sicoob',
+        'XP',
+        'Outro',
+    ]
     gastos_gerados = []
 
     for _ in range(5):
@@ -318,7 +334,24 @@ class GanhoDeleteView(LoginRequiredMixin, View):
 def gerar_ganhos_exemplo(request):
     pessoa = request.user.pessoa
 
-    bancos = ['Itau', 'Bradesco', 'Santander', 'Nubank', 'Outro']
+    bancos = [
+        'Banco do Brasil',
+        'Banco Inter',
+        'Banco Original',
+        'Banrisul',
+        'Bradesco',
+        'Caixa',
+        'C6 Bank',
+        'Itau',
+        'Nubank',
+        'Next',
+        'Pan',
+        'Santander',
+        'Sicredi',
+        'Sicoob',
+        'XP',
+        'Outro',
+    ]
     ganhos_gerados = []
 
     for _ in range(5):
