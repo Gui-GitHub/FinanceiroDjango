@@ -1,19 +1,20 @@
-document.addEventListener('DOMContentLoaded', function() {
-  const input = document.getElementById('password');
-  const icon = document.getElementById('togglePassword');
+function setupTogglePassword(inputId, iconId) {
+  const input = document.getElementById(inputId);
+  const icon = document.getElementById(iconId);
 
-  if (!icon || !input) {
-    console.warn("Campo de senha ou ícone não encontrado.");
-    return;
-  }
+  if (!icon || !input) return;
 
   icon.addEventListener('click', function() {
     const isPassword = input.type === "password";
-
     input.type = isPassword ? "text" : "password";
 
-    // alterna os ícones
     icon.classList.toggle("bi-eye");
     icon.classList.toggle("bi-eye-slash");
   });
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  setupTogglePassword("current_password", "toggleCurrentPassword");
+  setupTogglePassword("new_password", "toggleNewPassword");
+  setupTogglePassword("confirm_password", "toggleConfirmPassword");
 });
