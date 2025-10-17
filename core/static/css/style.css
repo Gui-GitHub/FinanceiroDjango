@@ -52,6 +52,47 @@ img {
 }
 
 /* ==========================
+   DASHBOARD STATS / CARDS
+========================== */
+.stat-card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 30px 20px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+  text-align: center;
+  min-height: 160px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.stat-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+.stat-card .icon {
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+  color: var(--primary-color);
+}
+
+.stat-card h3 {
+  font-size: 2rem;
+  font-weight: 600;
+  color: var(--primary-color);
+  margin: 0;
+}
+
+.stat-card p {
+  margin-top: 6px;
+  font-size: 1rem;
+  color: #555;
+  font-weight: 500;
+}
+
+/* ==========================
    BOTÕES
 ========================== */
 .btn-primary {
@@ -220,9 +261,9 @@ table td {
 
 #graficoMes,
 #graficoMesBanco {
-  min-height: 400px !important;
-  height: 400px !important;
-  max-height: 500px !important;
+  min-height: 400px;
+  height: 400px;
+  max-height: 500px;
   width: 100% !important;
   display: block;
   margin: 0 auto;
@@ -232,15 +273,15 @@ table td {
 #graficoMesBanco canvas {
   min-height: 400px !important;
   height: 400px !important;
-  max-height: 500px !important;
+  max-height: 500px;
   width: 100% !important;
   display: block;
   margin: 0 auto;
 }
 
 #graficoGastoGanho {
-  height: 400px !important;
-  width: 400px !important;
+  height: 400px;
+  width: 400px;
   margin: 0 auto 48px auto;
 }
 
@@ -313,6 +354,18 @@ canvas {
     width: 100%;
     padding: 1rem 1.5rem;
     border-bottom: 1px solid #dc3545;
+  }
+  
+  /* Responsividade */
+  .stat-card {
+    padding: 20px 10px;
+    min-height: 130px;
+  }
+  .stat-card .icon {
+    font-size: 2rem;
+  }
+  .stat-card h3 {
+    font-size: 1.5rem;
   }
 
   /* Relatórios: espaçamento filtros */
