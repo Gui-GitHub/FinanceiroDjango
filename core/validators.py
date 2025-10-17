@@ -24,7 +24,7 @@ class Validator:
             (len(password) >= 4, "A senha deve ter pelo menos 4 caracteres."),
             (re.search(r"[A-Z]", password), "A senha deve conter pelo menos uma letra maiúscula."),
             (re.search(r"[a-z]", password), "A senha deve conter pelo menos uma letra minúscula."),
-            (re.search(r"[!@#$%^&*(),.?\":{}|<>]", password), "A senha deve conter pelo menos um caractere especial.")
+            (re.search(r"[!@#$%^&*(),.?\":{}|<>*\-_\[\]\\\/]", password), "A senha deve conter pelo menos um caractere especial.")
         ]
         for ok, msg in regras:
             if not ok:
