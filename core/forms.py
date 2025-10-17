@@ -45,7 +45,7 @@ class PessoaForm(forms.ModelForm):
 
 # Formulário para a senha
 class SenhaForm(forms.Form):
-    current_password = forms.CharField(
+    password = forms.CharField(
         label="Senha Atual",
         widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Digite sua senha atual'}),
         required=True
@@ -54,7 +54,7 @@ class SenhaForm(forms.Form):
         label="Nova Senha",
         widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Digite a nova senha'}),
         required=True,
-        validators=[validate_password]  # Senha do Django
+        validators=[validate_password]
     )
     confirm_password = forms.CharField(
         label="Confirmar Nova Senha",
