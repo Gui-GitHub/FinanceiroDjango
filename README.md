@@ -40,6 +40,7 @@ Durante o desenvolvimento, foram implementadas melhorias como:
 - **Cadastro de Usuários**
   - Autenticação com senha segura
   - Controle de permissões
+  - Alteração de dados incluindo senha
 
 - **Gestão de Finanças**
   - Registro de **gastos** e **ganhos**
